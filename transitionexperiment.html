@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Transitions Study</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/jspsych.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-text.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-text.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-similarity.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/black-tie/jquery-ui.min.css" rel="stylesheet" type="text/css"></link>
+    <link href="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body>
+  </body>
+  <script>
+    // starts with the consent form (formatted text, consent or no?)
+    consent_text = "<p>\n<strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u><br></u></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Purpose of the Study:</u>&nbsp; Y</span><span style=\"font-family:arial,helvetica,sans-serif;\">ou have been asked to perform in a study to learn more about  people's emotional experiences <br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>What you will do in this study:</u>\n During this study you will </span>rate the likelihood of a person feeling the first emotion later feeling the second emotion.</p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Time Required:</u> The study will take up to 45 minutes to complete.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Risks &amp; Benefits:</u> There are no anticipated risks associated with being in this study.</span><span style=\"font-family: arial, helvetica, sans-serif;\"> At the end of the study, we can provide a thorough explanation of the study and of our hypotheses.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Compensation:</u> You will receive </span><span style=\"font-family:arial,helvetica,sans-serif;\">$2.50&nbsp;</span> for completing this survey, which will be awarded through your Amazon Mechanical Turk account.</p>\n\n<p>&nbsp;</p>\n\n<p><u>Confidentiality:</u>&nbsp;Your name will be stored separately from any \ndata regarding your responses. Your participation in this study will \nremain confidential, although the data will be stored for several years \nand may be used for a variety of research purposes.<span style=\"font-family: arial, helvetica, sans-serif;\"></span></p>\n\n<p>&nbsp;</p>\n\n<p>\n</p><p>\n<u>Participation and withdrawal:</u>&nbsp;Your participation in this study is\n completely voluntary. You may withdraw at any time without penalty by \nsimply closing or redirecting your browser's tab (no questions will be \nasked). You will still receive the promised\n monetary compensation and a detailed explanation of the study’s aims \nand hypotheses.<span style=\"font-family:arial,helvetica,sans-serif;\">The results of this research study may be presented at \nscientific or professional meetings or published in scientific \njournals.</span></p>\n\n<div>\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>To Contact the Researcher:</u>&nbsp; If you have questions about this study, please contact Diana Tamir (dtamir@princeton.edu).</span></p>\n</div>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Agreement:</u>\n The purpose and nature of this research have been sufficiently \nexplained and I agree to participate in this study. I understand that I \nam free to withdraw at any time without incurring any penalty.</span></p><p><br><span style=\"font-family:arial,helvetica,sans-serif;\"></span></p><p><strong>Whom to contact about your rights in this research, for \nquestions, concerns, suggestions, or complaints that are not being \naddressed by the researcher, or research-related harm.</strong></p>\n<p>\nOffice of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</p>"
+    var consent_form = {
+      type: 'survey-multi-choice',
+      questions: [''],
+      options: [["I agree to participate in this study.", "I DO NOT agree to participate in this study"]],
+      required: [true],
+      horizontal: false,
+      preamble: consent_text,
+    };
+    
+    // Next is a text submission "What is your TurkPrime ID?"
+    var get_id = {
+      type: 'survey-text',
+      questions: ['What is your TurkPrime ID?'],
+      
+    };
+    
+    // Instructions...
+    instructions = "<p><strong>Instructions</strong></p><p>People can experience many different emotions. These emotional states are not static. Instead, they change gradually over time. We are interested in your thoughts on how one emotion may lead to another. So for example, if you feel tired one moment, what are the chances that you will feel excited next? What are the chances that you will feel sleepy next?&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>In this study you will be presented with pairs of emotions. The first emotion denotes the&nbsp;current state; the second emotion denotes the&nbsp;next emotional state. You task is to estimate&nbsp;the likelihood of a person feeling the first emotion later feeling the second emotion. For this example, what is the chance of a person currently feeling Tired next feeling Excited?</p>\n\n<p>&nbsp;</p>\n\n<p>For example:</p>\n\n<p>&nbsp;</p>\n\n<p><b>Tired -> Excited</b></p>\n\n<p><b>&nbsp;</b></p>\n\n<p>You will make your rating on a scale from 0-100%, where 0% means that there is zero chance that a person feeling tired will feel excited next, and where 100% means that a person feeling tired now will definitely feel excited next.&nbsp;</p><p><strong>Click <strong>here</strong> once you understand these instructions.</strong></p>"
+    var instruction_block = {
+      type: 'text',
+      text: instructions,
+      cont_key: 'mouse',
+    };
+    
+    // Let's generate instructions for each trial.
+    // first shuffle each emotion
+    function shuffle(o){
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+    }
+    emotions = shuffle(['Joyful', 'Tenderness', 'Helpless', 'Defeated', 'Rageful', 'Cheerful', 'Sympathy', 'Powerless', 'Bored', 'Outraged', 'Content', 'Adoration', 'Dreading', 'Rejected', 'Hostile', 'Proud', 'Fondness', 'Distrusting', 'Disillusioned', 'Bitter', 'Satisfied', 'Receptive', 'Suspicious', 'Inferior', 'Hateful', 'Excited', 'Interested', 'Cautious', 'Confused', 'Scornful', 'Amused', 'Delighted', 'Disturbed', 'Grief-stricken', 'Spiteful', 'Elated', 'Shocked', 'Overwhelmed', 'Helpless', 'Vengeful', 'Enthusiastic', 'Exhilarated', 'Uncomfortable', 'Isolated', 'Disliked', 'Optimistic', 'Dismayed', 'Guilty', 'Numb', 'Resentful', 'Elated', 'Amazed', 'Hurt', 'Regretful', 'Trusting', 'Delighted', 'Confused', 'Lonely', 'Ambivalent', 'Alienated', 'Calm', 'Stunned', 'Melancholy', 'Exhausted', 'Bitter', 'Relaxed', 'Interested', 'Depressed', 'Insecure', 'Insulted', 'Relieved', 'Intrigued', 'Hopeless', 'Disgusted'])
+    
+    // now produce a set of stimuli for tests
+    // "Please rate the likelihood (0%-100%) of the following emotion transition:"
+    var tests = [];
+    count = Math.floor(10/2);
+    for (i = 1; i <= count; i++) {
+      test = 'Please rate the likelihood (0%-100%) of the following emotion transition:\n\n<p style="text-align:center;"><b>' +
+                  emotions[i] + '->' + emotions[count+i] + '</b></p>\n\n';
+      tests.push({
+        stimuli: [test,test]
+      });
+    }
+    
+    // put everything together
+    var test_block = {
+      type: 'similarity',
+      labels: ['0','25','50','75','100'],
+      is_html: true,
+      timing_first_stim: 1,
+      timing_second_stim: -1,
+      timing_image_gap: 1,
+      timeline: tests
+    };
+    
+    // Debrief block...
+    var debrief = {
+      type: 'text',
+      text: '<p>We thank you for your time spent taking this survey.</p><p>Your response has been recorded. Click <strong>here</strong> to see your data.</p>',
+      cont_key: 'mouse',
+    };
+    
+    // experiment timeline array...
+    jsPsych.init({
+        timeline: [consent_form, get_id, instruction_block, test_block, debrief ],
+        show_progress_bar: true,
+        on_finish: function() {
+          jsPsych.data.displayData();
+        }
+    });
+  </script>
+</html>

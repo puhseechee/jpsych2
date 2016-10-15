@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Similarity Study</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/jspsych.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-text.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-text.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-likert.js"></script>
+    <link href="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body>
+  </body>
+  <script>
+    
+    // starts with the consent form (formatted text, consent or no?, required)
+    consent_text = "<p>\n<strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u><br></u></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Purpose of the Study:</u>&nbsp; Y</span><span style=\"font-family:arial,helvetica,sans-serif;\">ou have been asked to perform in a study to learn more about  people's emotional experiences <br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>What you will do in this study:</u>\n During this study you will </span>rate the likelihood of a person feeling the first emotion later feeling the second emotion.</p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Time Required:</u> The study will take up to 45 minutes to complete.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Risks &amp; Benefits:</u> There are no anticipated risks associated with being in this study.</span><span style=\"font-family: arial, helvetica, sans-serif;\"> At the end of the study, we can provide a thorough explanation of the study and of our hypotheses.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Compensation:</u> You will receive </span><span style=\"font-family:arial,helvetica,sans-serif;\">$2.50&nbsp;</span> for completing this survey, which will be awarded through your Amazon Mechanical Turk account.</p>\n\n<p>&nbsp;</p>\n\n<p><u>Confidentiality:</u>&nbsp;Your name will be stored separately from any \ndata regarding your responses. Your participation in this study will \nremain confidential, although the data will be stored for several years \nand may be used for a variety of research purposes.<span style=\"font-family: arial, helvetica, sans-serif;\"></span></p>\n\n<p>&nbsp;</p>\n\n<p>\n</p><p>\n<u>Participation and withdrawal:</u>&nbsp;Your participation in this study is\n completely voluntary. You may withdraw at any time without penalty by \nsimply closing or redirecting your browser's tab (no questions will be \nasked). You will still receive the promised\n monetary compensation and a detailed explanation of the study’s aims \nand hypotheses.<span style=\"font-family:arial,helvetica,sans-serif;\">The results of this research study may be presented at \nscientific or professional meetings or published in scientific \njournals.</span></p>\n\n<div>\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>To Contact the Researcher:</u>&nbsp; If you have questions about this study, please contact Diana Tamir (dtamir@princeton.edu).</span></p>\n</div>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Agreement:</u>\n The purpose and nature of this research have been sufficiently \nexplained and I agree to participate in this study. I understand that I \nam free to withdraw at any time without incurring any penalty.</span></p><p><br><span style=\"font-family:arial,helvetica,sans-serif;\"></span></p><p><strong>Whom to contact about your rights in this research, for \nquestions, concerns, suggestions, or complaints that are not being \naddressed by the researcher, or research-related harm.</strong></p>\n<p>\nOffice of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</p>"
+    var consent = {
+      type: 'survey-multi-choice',
+      questions: [''],
+      options: [["I agree to participate in this study.", "I DO NOT agree to participate in this study"]],
+      required: [true],
+      horizontal: false,
+      preamble: consent_text,
+    };
+    
+    // Next "What is your TurkPrime ID?"
+    var get_id = {
+      type: 'survey-text',
+      questions: ['What is your TurkPrime ID?'],
+    };
+    
+    // Next a multiple choice survey.
+    // What is your gender? Female, Male, Other
+    // What is your age? "18 to 22 years", "23 to 36 years", "37 to 55 years", "56 to 70", ">70 years"
+    // Which political party do you identify with more? Democratic Party, Republican Party
+    // Please indicate which best matches your political orientation: Liberal, Conservative
+    // Please indicate which best matches your religiosity: Religious, Nonreligious.
+    // Which activity would have (or did) interest you more in high school? Sports, An academic club.
+    // Which area of study interests you more? Arts and humanities; Science, technology, engineering and math
+    
+    var survey = {
+      type: 'survey-multi-choice',
+      questions: ["What is your gender?", "What is your age?",
+                 "Which political party do you identify with more?",
+                 "Please indicate which best matches your political orientation:",
+                 "Please indicate which best matches your religiosity:",
+                 "Which activity would have (or did) interest you more in high school?",
+                 "Which area of study interests you more?"],
+      options: [['Female', 'Male', 'Other'],
+               ["18 to 22 years", "23 to 36 years", "37 to 55 years", "56 to 70", ">70 years"],
+               ['Democratic Party', 'Republican Party'],
+               ['Liberal', 'Conservative'],
+               ['Religious', 'Nonreligious'],
+               ['Sports', 'An academic club'],
+               ['Arts and humanities', 'Science, technology, engineering and math']],
+      required: [true, true, true, true, true, true]
+    };
+    
+    // Next "Think of someone close to you..." Please write his/her first name below.
+    var closename = {
+      type: 'survey-text',
+      questions: ['Think of someone close to you, such as a friend or a relative, who is similar to you.  (For example, someone who has a similar personality, experiences the world similarly, has a similar background to you, etc.)  Choose someone whom you know well, as you will be asked to consider them throughout the experiment.  Please write his/her first name below:'],
+    };
+    
+    // Also, indicate this person's gender.
+    function getCloseName() {
+      var stuff = jsPsych.data.getDataByTrialIndex(3);
+      return stuff.responses.substring(7, stuff.responses.length-2);
+    }
+    var get_othergender = {
+      type: 'survey-multi-choice',
+      options: [['Female', 'Male', 'Other']],
+      questions: function() {
+        return ["Please indicate the gender of " + getCloseName() + ':'];
+      }
+    };
+    
+    // Instructions; multiple pages.
+    instructions1 = '<p>Instructions:</p><p>In this study, we are interested in how you think about mental states: the thoughts and feelings a person may experience. On each question, you will see two mental states terms. For example, you might see the mental state terms "happiness" and "anticipation." Your goal in this task is to judge how similar it is to experience each of these two states.</p><p>For example, on this trial, you should think about a state of happiness and a state of anticipation. You will then rate the similarity of the experiences of happiness and anticipation. There are many ways in which two states might be similar or different, such as how positive they are, how emotional they are, or how intense they are. Try not to focus on any one feature of similarity or difference. Rather consider the states holistically.</p><p><strong>Click this text to continue.</strong></p>';
+    var ins1 = {
+      type: 'text',
+      text: instructions1,
+      cont_key: 'mouse',
+    };
+    
+    instructions2 = '<p>You will be asked to rate the similarity of pairs of states in three ways. Specifically, you will answer questions about your own experiences, the experiences of a person close to you, and the experiences of a person we will introduce you to in a moment. On each question, think carefully about each specific person\'s experiences of each state.</p><p>For example, perhaps some people are more even-keeled than others. These calm or stoic people may experience smaller differences between some of their mental states in comparison with more excitable or lively people.</p><p><strong>Click this text to continue.</strong></p>';
+    var ins2 = {
+      type: 'text',
+      text: instructions2,
+      cont_key: 'mouse',
+    };
+    
+    instructions3 = "<p>In the next block, you answer questions about your own personal experiences. You will rate how similar two mental states are when you personally experience those states. Think carefully about your unique mental experiences.</p><p><strong>Click this text to continue.</strong></p>";
+    var ins3 = {
+      type: 'text',
+      text: instructions3,
+      cont_key: 'mouse',
+    };
+    
+    // The first task. How similar are <>desire<> and <>embarrassment<> for <>You<>?" Likert scale.
+    
+    // Let's generate instructions for each trial.
+    // first shuffle each emotion
+    function shuffle(o){
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+    }
+    emotions = shuffle(['Joyful', 'Tenderness', 'Helpless', 'Defeated', 'Rageful', 'Cheerful', 'Sympathy', 'Powerless', 'Bored', 'Outraged', 'Content', 'Adoration', 'Dreading', 'Rejected', 'Hostile', 'Proud', 'Fondness', 'Distrusting', 'Disillusioned', 'Bitter', 'Satisfied', 'Receptive', 'Suspicious', 'Inferior', 'Hateful', 'Excited', 'Interested', 'Cautious', 'Confused', 'Scornful', 'Amused', 'Delighted', 'Disturbed', 'Grief-stricken', 'Spiteful', 'Elated', 'Shocked', 'Overwhelmed', 'Helpless', 'Vengeful', 'Enthusiastic', 'Exhilarated', 'Uncomfortable', 'Isolated', 'Disliked', 'Optimistic', 'Dismayed', 'Guilty', 'Numb', 'Resentful', 'Elated', 'Amazed', 'Hurt', 'Regretful', 'Trusting', 'Delighted', 'Confused', 'Lonely', 'Ambivalent', 'Alienated', 'Calm', 'Stunned', 'Melancholy', 'Exhausted', 'Bitter', 'Relaxed', 'Interested', 'Depressed', 'Insecure', 'Insulted', 'Relieved', 'Intrigued', 'Hopeless', 'Disgusted']);
+    
+    // now produce a set of stimuli for tests
+    // How similar are <>desire<> and <>embarrassment<> for <>Matt<>?
+    var tests = [];
+    count = Math.floor(10/2);
+    for (i = 1; i <= count; i++) {
+      test = '<p>How similar are <strong>' + emotions[i] +
+      '</strong> and <strong>' + emotions[count+i] + '</strong> for <strong>you</strong>?</p>';
+      tests.push({
+        questions: [test]
+      });
+    }
+    
+    // put everything together
+    var test_block = {
+      type: 'survey-likert',
+      labels: [['Very different','','','','','Very similar']],
+      timeline: tests,
+      required: [true],
+    };
+    
+    // Last task. How similar are <>desire<> and <>embarrassment<> for <>friend<>?
+    instructions1b2 = "<p>Please read the short biography below. In the next block, you will be asked to rate this person's mental states. You will rate how similar to mental states are when this person experiences those states. Think carefully about their unique mental experiences.</p>" +
+    "Matt considers himself a typical college student majoring in comparative literature. While Matt respects religion, he does not consider himself religious. He is very involved politically and plans to volunteer for the Republican Party during the 2016 presidential campaign. Matt keeps himself busy at college with extra-curricular activities, such as participating in intramural soccer and tutoring high school students in evolutionary biology. After graduation, he hopes to take a year or two off and then possibly return for graduate school. Matt hopes to have a career that is fulfilling and rewarding.";
+    var ins1b2 = {
+      type: 'text',
+      text: instructions1b2,
+      cont_key: 'mouse',
+    };
+    
+    // Debrief block...
+    var debrief = {
+      type: 'text',
+      text: '<p>We thank you for your time spent taking this survey.</p><p>Your response has been recorded. Click <strong>here</strong> to see your data.</p>',
+      cont_key: 'mouse',
+    };
+    
+    // experiment timeline array...
+    jsPsych.init({
+        timeline: [consent, get_id, survey, closename, get_othergender, ins1, ins2, ins3, test_block, ins1b2, debrief],
+        show_progress_bar: true,
+        on_finish: function() {
+          jsPsych.data.displayData();
+        }
+    });
+  </script>
+</html>
