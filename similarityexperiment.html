@@ -102,24 +102,51 @@
     // The first task. How similar are <>desire<> and <>embarrassment<> for <>You<>?" Likert scale.
     
     // Let's generate instructions for each trial.
-    // first shuffle each emotion
+    // there are 3 clusters of 5 emotions each; each permutation should be tested
+    // and of course the ordering of trials should be random
+    
+    var cluster1 = ["Confident", "Grouchy", "Sad", "Assertive", "Unrestrained"];
+    var cluster2 = ["Nervous", "Irritable", "Lively", "Bold", "Talkative"];
+    var cluster3 = ["Satisfaction", "Love", "Disgust", "Contempt", "Embarrassment"];
+    var tests = [];
+    
+    // a nested loop for each cluster should do the job
+    // cluster1
+    for (i = 0; i < 5; i++) {
+      for (j = 0; j < 5; j++) {
+          test = '<p>How similar are <strong>' + cluster1[i] +
+          '</strong> and <strong>' + cluster1[j] + '</strong> for <strong>you</strong>?</p>';
+          tests.push({
+            questions: [test]
+          });
+      }
+    }
+    // cluster2
+    for (i = 0; i < 5; i++) {
+      for (j = 0; j < 5; j++) {
+          test = '<p>How similar are <strong>' + cluster2[i] +
+          '</strong> and <strong>' + cluster2[j] + '</strong> for <strong>you</strong>?</p>';
+          tests.push({
+            questions: [test]
+          });
+      }
+    }
+    // cluster3
+    for (i = 0; i < 5; i++) {
+      for (j = 0; j < 5; j++) {
+          test = '<p>How similar are <strong>' + cluster3[i] +
+          '</strong> and <strong>' + cluster3[j] + '</strong> for <strong>you</strong>?</p>';
+          tests.push({
+            questions: [test]
+          });
+      }
+    }
+    // shuffle the results
     function shuffle(o){
         for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
         return o;
     }
-    emotions = shuffle(['Joyful', 'Tenderness', 'Helpless', 'Defeated', 'Rageful', 'Cheerful', 'Sympathy', 'Powerless', 'Bored', 'Outraged', 'Content', 'Adoration', 'Dreading', 'Rejected', 'Hostile', 'Proud', 'Fondness', 'Distrusting', 'Disillusioned', 'Bitter', 'Satisfied', 'Receptive', 'Suspicious', 'Inferior', 'Hateful', 'Excited', 'Interested', 'Cautious', 'Confused', 'Scornful', 'Amused', 'Delighted', 'Disturbed', 'Grief-stricken', 'Spiteful', 'Elated', 'Shocked', 'Overwhelmed', 'Helpless', 'Vengeful', 'Enthusiastic', 'Exhilarated', 'Uncomfortable', 'Isolated', 'Disliked', 'Optimistic', 'Dismayed', 'Guilty', 'Numb', 'Resentful', 'Elated', 'Amazed', 'Hurt', 'Regretful', 'Trusting', 'Delighted', 'Confused', 'Lonely', 'Ambivalent', 'Alienated', 'Calm', 'Stunned', 'Melancholy', 'Exhausted', 'Bitter', 'Relaxed', 'Interested', 'Depressed', 'Insecure', 'Insulted', 'Relieved', 'Intrigued', 'Hopeless', 'Disgusted']);
-    
-    // now produce a set of stimuli for tests
-    // How similar are <>desire<> and <>embarrassment<> for <>Matt<>?
-    var tests = [];
-    count = Math.floor(10/2);
-    for (i = 1; i <= count; i++) {
-      test = '<p>How similar are <strong>' + emotions[i] +
-      '</strong> and <strong>' + emotions[count+i] + '</strong> for <strong>you</strong>?</p>';
-      tests.push({
-        questions: [test]
-      });
-    }
+    tests = shuffle(tests);
     
     // put everything together
     var test_block = {
