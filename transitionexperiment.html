@@ -8,6 +8,7 @@
     <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-multi-choice.js"></script>
     <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-text.js"></script>
     <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-similarity.js"></script>
+    <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-likert.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/black-tie/jquery-ui.min.css" rel="stylesheet" type="text/css"></link>
     <link href="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
@@ -15,39 +16,44 @@
   <body>
   </body>
   <script>
-    // starts with the consent form (formatted text, consent or no?)
-    consent_text = "<p>\n<strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u><br></u></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Purpose of the Study:</u>&nbsp; Y</span><span style=\"font-family:arial,helvetica,sans-serif;\">ou have been asked to perform in a study to learn more about  people's emotional experiences <br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>What you will do in this study:</u>\n During this study you will </span>rate the likelihood of a person feeling the first emotion later feeling the second emotion.</p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Time Required:</u> The study will take up to 45 minutes to complete.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Risks &amp; Benefits:</u> There are no anticipated risks associated with being in this study.</span><span style=\"font-family: arial, helvetica, sans-serif;\"> At the end of the study, we can provide a thorough explanation of the study and of our hypotheses.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Compensation:</u> You will receive </span><span style=\"font-family:arial,helvetica,sans-serif;\">$2.50&nbsp;</span> for completing this survey, which will be awarded through your Amazon Mechanical Turk account.</p>\n\n<p>&nbsp;</p>\n\n<p><u>Confidentiality:</u>&nbsp;Your name will be stored separately from any \ndata regarding your responses. Your participation in this study will \nremain confidential, although the data will be stored for several years \nand may be used for a variety of research purposes.<span style=\"font-family: arial, helvetica, sans-serif;\"></span></p>\n\n<p>&nbsp;</p>\n\n<p>\n</p><p>\n<u>Participation and withdrawal:</u>&nbsp;Your participation in this study is\n completely voluntary. You may withdraw at any time without penalty by \nsimply closing or redirecting your browser's tab (no questions will be \nasked). You will still receive the promised\n monetary compensation and a detailed explanation of the study’s aims \nand hypotheses.<span style=\"font-family:arial,helvetica,sans-serif;\">The results of this research study may be presented at \nscientific or professional meetings or published in scientific \njournals.</span></p>\n\n<div>\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>To Contact the Researcher:</u>&nbsp; If you have questions about this study, please contact Diana Tamir (dtamir@princeton.edu).</span></p>\n</div>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Agreement:</u>\n The purpose and nature of this research have been sufficiently \nexplained and I agree to participate in this study. I understand that I \nam free to withdraw at any time without incurring any penalty.</span></p><p><br><span style=\"font-family:arial,helvetica,sans-serif;\"></span></p><p><strong>Whom to contact about your rights in this research, for \nquestions, concerns, suggestions, or complaints that are not being \naddressed by the researcher, or research-related harm.</strong></p>\n<p>\nOffice of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</p>"
-    var consent_form = {
+    // set up the experiment timeline
+    var timeline = [];
+    
+    // 0 - starts with the consent form (formatted text, consent or no?, required)
+    var consent_text = '<br><div><div><p> <strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p><span ><u><br></u></span></p><p><span ><u>Purpose of the Study:</u>&nbsp; Y</span><span >ou have been asked to perform in a study to learn more about  people\'s emotional experiences <br></span></p><p><span ><br></span></p><p><span ><u>What you will do in this study:</u> During this study you will </span>rate the likelihood of a person feeling the first emotion later feeling the second emotion.</p> <p>&nbsp;</p> <p><span ><u>Time Required:</u> The study will take up to 45 minutes to complete.</span></p> <p>&nbsp;</p> <p><span ><u>Risks &amp; Benefits:</u> There are no anticipated risks associated with being in this study.</span><span  arial, helvetica, sans-serif;"> At the end of the study, we can provide a thorough explanation of the study and of our hypotheses.</span></p> <p>&nbsp;</p> <p><span ><u>Compensation:</u> You will receive </span><span >$2.50&nbsp;</span> for completing this survey, which will be awarded through your Amazon Mechanical Turk account.</p> <p>&nbsp;</p> <p><u>Confidentiality:</u>&nbsp;Your name will be stored separately from any data regarding your responses. Your participation in this study will remain confidential, although the data will be stored for several years and may be used for a variety of research purposes.<span  arial, helvetica, sans-serif;"></span></p> <p>&nbsp;</p> <p> </p><p> <u>Participation and withdrawal:</u>&nbsp;Your participation in this study is completely voluntary. You may withdraw at any time without penalty by simply closing or redirecting your browser\'s tab (no questions will be asked). You will still receive the promised monetary compensation and a detailed explanation of the study’s aims and hypotheses.<span >The results of this research study may be presented at scientific or professional meetings or published in scientific journals.</span></p> <div> <p>&nbsp;</p> <p><span ><u>To Contact the Researcher:</u>&nbsp; If you have questions about this study, please contact Diana Tamir (dtamir@princeton.edu).</span></p> </div> <p>&nbsp;</p> <p><span ><u>Agreement:</u> The purpose and nature of this research have been sufficiently explained and I agree to participate in this study. I understand that I am free to withdraw at any time without incurring any penalty.</span></p><p><br><span ></span></p><p><strong>Whom to contact about your rights in this research, for questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm.</strong></p> <p> Office of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</p> </div><div><u><em><span class="LabelWrapper"><span ><span  13px; "><br></span></span></span><em><span class="LabelWrapper"><span ><span  13px; "></span></span></span></em></em></u></div></div>';
+    var consent = {
       type: 'survey-multi-choice',
       questions: [''],
       options: [["I agree to participate in this study.", "I DO NOT agree to participate in this study"]],
       required: [true],
       horizontal: false,
-      preamble: consent_text,
+      preamble: consent_text
     };
+    timeline.push(consent);
     
-    // Next is a text submission "What is your TurkPrime ID?"
-    var get_id = {
+    // 1 - Next "What is your TurkPrime ID?"
+    var turkprime_id = {
       type: 'survey-text',
       questions: ['What is your TurkPrime ID?'],
-      
     };
+    timeline.push(turkprime_id);
     
-    // Instructions...
-    instructions = "<p><strong>Instructions</strong></p><p>People can experience many different emotions. These emotional states are not static. Instead, they change gradually over time. We are interested in your thoughts on how one emotion may lead to another. So for example, if you feel tired one moment, what are the chances that you will feel excited next? What are the chances that you will feel sleepy next?&nbsp;</p>\n\n<p>&nbsp;</p>\n\n<p>In this study you will be presented with pairs of emotions. The first emotion denotes the&nbsp;current state; the second emotion denotes the&nbsp;next emotional state. You task is to estimate&nbsp;the likelihood of a person feeling the first emotion later feeling the second emotion. For this example, what is the chance of a person currently feeling Tired next feeling Excited?</p>\n\n<p>&nbsp;</p>\n\n<p>For example:</p>\n\n<p>&nbsp;</p>\n\n<p><b>Tired -> Excited</b></p>\n\n<p><b>&nbsp;</b></p>\n\n<p>You will make your rating on a scale from 0-100%, where 0% means that there is zero chance that a person feeling tired will feel excited next, and where 100% means that a person feeling tired now will definitely feel excited next.&nbsp;</p><p><strong>Click <strong>here</strong> once you understand these instructions.</strong></p>"
-    var instruction_block = {
+    // 2 - Instructions
+    var instructions1 = "<p>People can experience many different emotions. These emotional states are not static. Instead, they change gradually over time. We are interested in your thoughts on how one emotion may lead to another. So for example, if you feel tired one moment, what are the chances that you will feel excited next? What are the chances that you will feel sleepy next?&nbsp;</p><p>&nbsp;</p><p>In this study you will be presented with pairs of emotions. The first emotion denotes the&nbsp;current state; the second emotion denotes the&nbsp;next emotional state. You task is to estimate&nbsp;the likelihood of a person feeling the first emotion later feeling the second emotion. For this example, what is the chance of a person currently feeling Tired next feeling Excited?</p><p>&nbsp;</p><p>For example:</p><p>&nbsp;</p><p><b>Tired&nbsp;→&nbsp;Excited</b></p><p><b>&nbsp;</b></p><p>You will make your rating on a scale from 0-100%, where 0% means that there is zero chance that a person feeling tired will feel excited next, and where 100% means that a person feeling tired now will definitely feel excited next.&nbsp;</p><p><strong>Click here to continue.</strong></p>";
+    var ins1 = {
       type: 'text',
-      text: instructions,
+      text: instructions1,
       cont_key: 'mouse',
     };
+    timeline.push(ins1);
     
     // Let's generate instructions for each trial.
     // there are 3 clusters of 5 emotions each; each permutation should be tested
     // and of course the ordering of trials should be random
-    
     var cluster1 = ["Confident", "Grouchy", "Sad", "Assertive", "Unrestrained"];
     var cluster2 = ["Nervous", "Irritable", "Lively", "Bold", "Talkative"];
     var cluster3 = ["Satisfaction", "Love", "Disgust", "Contempt", "Embarrassment"];
+    var emotions = ["Confident", "Grouchy", "Sad", "Assertive", "Unrestrained", "Nervous", "Irritable", "Lively", "Bold", "Talkative", "Satisfaction", "Love", "Disgust", "Contempt", "Embarrassment"];
     var tests = [];
     
     // a nested loop for each cluster should do the job
@@ -81,7 +87,6 @@
       }
     }
     
-    
     // shuffle the result
     function shuffle(o){
         for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -99,18 +104,60 @@
       timing_image_gap: 1,
       timeline: tests
     };
+    timeline.push(test_block);
     
-    // Debrief block...
-    var debrief = {
-      type: 'text',
-      text: '<p>We thank you for your time spent taking this survey.</p><p>Your response has been recorded. Click <strong>here</strong> to see your data.</p>',
-      cont_key: 'mouse',
+    // next the post-test survey
+    var questions = [];
+    for (i=0; i<15; i++) {
+        question = "<p>Please rate how frequently do you experience the following emotion:</p><p style='text-align:center'><strong>" + emotions[i] + "</strong></p>";
+        questions.push({
+            questions: [question]
+        });
+    }
+    questions = shuffle(questions);
+    var survey_block = {
+        type: "survey-likert",
+        labels: [['All the time','Daily','3-5 times a week','Once a week','Once a month','Once a year', 'Never']],
+        timeline: questions,
+        required: [true],
     };
+    timeline.push(survey_block);
     
-    // experiment timeline array...
+    // demographics multichoice
+    var dem1 = {
+        type: 'survey-multi-choice',
+        questions: ["What is your gender?", "We want to make sure that people are paying careful attention to the survey questions. Please don't select any response for this question.",
+                    "How would you rate your comprehension and use of the English language?", ],
+        options: [["Male", "Female", "Other", "Prefer not to answer"], ["I live in the United States", "I live outside of the United States"], ['Very poor', 'Poor', 'Fair', 'Good', 'Very good', 'Excellent (At the level of a native speaker)']],
+        required: [true, false, true],
+    };
+    timeline.push(dem1);
+    
+    // demographics survey text
+    var dem2 = {
+        type: 'survey-text',
+        questions: ["How old are you?", "What is your native (first) language?", "<span >Do you have any other suggestions or comments? Please write anything that’s on your mind even if you are unsure—your comments help us design better experiments.</strong></span><div>&nbsp;</div><div><span >(If you don't have any suggestions or comments, just type 'No' below.)</span></div>"],
+        rows: [1, 1, 2],
+    };
+    timeline.push(dem2);
+    
+    // debriefing
+    var debrief1 = {
+        type: 'text',
+        text: 'Thank you for completing the questionnaire.<br><br><strong>VERY IMPORTANT</strong>: Enter the following completion code in the box found on the Amazon Mechanical Turk page where you accessed this questionnaire link <em>in order to receive payment for your participation.</em><div>&nbsp;<div  center;"><span ><b>emotra22</b></span></div></div><p><strong>Click here to continue.</strong></p>',
+        cont_key: 'mouse'
+    };
+    var debrief2 = {
+        type: 'text',
+        text: '<p><span  16px;">Thank you for your participation in today&rsquo;s experiment.&nbsp; Our research depends entirely on volunteers such as you, and we appreciate your being willing to commit time and energy to today&rsquo;s experiment.</span></p><p>&nbsp;</p><p><span 16px;">For millennia, philosophers have argued that human beings are driven by two forces: emotion and reason. But does the human brain make this distinction when we think about the minds of others? That is, do our brains respond differently when we think about a friend feeling upset by a math problem versus that same friend reasoning about a math problem?&nbsp;Neuroscientists have a good understanding of how the brain responds to thinking about other people, however, little is known about how the brain organizes this knowledge of mental states (e.g., happiness, sadness, thinking).&nbsp;&nbsp;The data that you provided today will allow us to generate a stimuli set that will be presented to participants in a functional magnetic resonance imaging scanner.&nbsp; Our aim is to begin to understand how the brain organizes our knowledge of mental states.</span></p><p>&nbsp;</p><p><span 16px;">For background on this research, you can read the paper:</span></p><p><span 16px;">&nbsp; &nbsp; &nbsp;<br />Tamir, D.I.*, Thornton, M.A.*, Contreras, J.M., Mitchell, J.P. (2015).&nbsp;Neural evidence that three dimensions organize mental state representation: rationality, social impact, and valence. Proceedings of the National Academy of Sciences,&nbsp;which can be accessed at http://psnlab.princeton.edu/sites/default/files/publications-pdf/TamirThornton_PNAS_inpress.pdf.</span></p><p>&nbsp;</p><p><span 16px;">If you have any questions or comments that you would like to share, or if you would like to receive a report of this research when it is completed (or a summary of the findings), please contact Professor Diana Tamir (prsonlab@gmail.com).</span></p><p>&nbsp;</p><p><span 16px;">If you have concerns about your rights as a participant in this experiment, please contact&nbsp;Office of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</span></p><p>&nbsp;</p><span 16px;">Please do not disclose the research procedures or hypotheses to anyone who might participate in this study between now and the end of the data collection (June 2017) as this could affect the results of the study.&nbsp; Thank you for your participation!</span><p>&nbsp;</p><p><strong>Click here to continue.</strong></p>',
+        cont_key: 'mouse'
+    };
+    timeline.push(debrief1);
+    timeline.push(debrief2);
+    
+    // put all the trials together
     jsPsych.init({
-        timeline: [consent_form, get_id, instruction_block, test_block, debrief ],
-        show_progress_bar: true,
+        timeline: timeline,
         on_finish: function() {
           jsPsych.data.displayData();
         }

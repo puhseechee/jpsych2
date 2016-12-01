@@ -13,33 +13,29 @@
   <body>
   </body>
   <script>
+    // set up the experiment timeline
+    var timeline = [];
     
-    // starts with the consent form (formatted text, consent or no?, required)
-    consent_text = "<p>\n<strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u><br></u></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Purpose of the Study:</u>&nbsp; Y</span><span style=\"font-family:arial,helvetica,sans-serif;\">ou have been asked to perform in a study to learn more about  people's emotional experiences <br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><br></span></p><p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>What you will do in this study:</u>\n During this study you will </span>rate the likelihood of a person feeling the first emotion later feeling the second emotion.</p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Time Required:</u> The study will take up to 45 minutes to complete.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Risks &amp; Benefits:</u> There are no anticipated risks associated with being in this study.</span><span style=\"font-family: arial, helvetica, sans-serif;\"> At the end of the study, we can provide a thorough explanation of the study and of our hypotheses.</span></p>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Compensation:</u> You will receive </span><span style=\"font-family:arial,helvetica,sans-serif;\">$2.50&nbsp;</span> for completing this survey, which will be awarded through your Amazon Mechanical Turk account.</p>\n\n<p>&nbsp;</p>\n\n<p><u>Confidentiality:</u>&nbsp;Your name will be stored separately from any \ndata regarding your responses. Your participation in this study will \nremain confidential, although the data will be stored for several years \nand may be used for a variety of research purposes.<span style=\"font-family: arial, helvetica, sans-serif;\"></span></p>\n\n<p>&nbsp;</p>\n\n<p>\n</p><p>\n<u>Participation and withdrawal:</u>&nbsp;Your participation in this study is\n completely voluntary. You may withdraw at any time without penalty by \nsimply closing or redirecting your browser's tab (no questions will be \nasked). You will still receive the promised\n monetary compensation and a detailed explanation of the study’s aims \nand hypotheses.<span style=\"font-family:arial,helvetica,sans-serif;\">The results of this research study may be presented at \nscientific or professional meetings or published in scientific \njournals.</span></p>\n\n<div>\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>To Contact the Researcher:</u>&nbsp; If you have questions about this study, please contact Diana Tamir (dtamir@princeton.edu).</span></p>\n</div>\n\n<p>&nbsp;</p>\n\n<p><span style=\"font-family:arial,helvetica,sans-serif;\"><u>Agreement:</u>\n The purpose and nature of this research have been sufficiently \nexplained and I agree to participate in this study. I understand that I \nam free to withdraw at any time without incurring any penalty.</span></p><p><br><span style=\"font-family:arial,helvetica,sans-serif;\"></span></p><p><strong>Whom to contact about your rights in this research, for \nquestions, concerns, suggestions, or complaints that are not being \naddressed by the researcher, or research-related harm.</strong></p>\n<p>\nOffice of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</p>"
+    // 0 - starts with the consent form (formatted text, consent or no?, required)
+    var consent_text = "<p><strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p>&nbsp;</p><p><u>Purpose of the Study:</u>&nbsp;You have been asked to perform in a study to learn more about how people reason about other people.<br>&nbsp;</p><p><u>What you will do in this study:</u>&nbsp;Rate how similar a variety of mental experiences are to each other for different people.<br></p><p>&nbsp;</p><p><u>Time Required:</u>&nbsp;The study will take approximately 30 minutes to complete.</p><p>&nbsp;</p><p><u>Risks:</u>&nbsp;There are no anticipated risks associated with being in this study.</p><p>&nbsp;</p><p><u>Benefits:</u>&nbsp;At the end of the study, we will provide a thorough explanation of the study and of our hypotheses.</p><p>&nbsp;</p><p><u>Compensation:</u>&nbsp;You will receive $1.80 for completing this survey, which will be awarded through your Amazon Mechanical Turk account.</p><p>&nbsp;</p><p><u>Confidentiality:</u> We will not ask you for your name or email address. Your data may be shared for research purposes. If so, it will first be stripped of any identifying information such as your MTurk ID or IP address to protect your anonymity.<br></p><p>&nbsp;</p><p><u>Participation and withdrawal:</u>&nbsp;Your participation in this study is completely voluntary. You may withdraw at any time without penalty by simply closing or redirecting your browser's tab (no questions will be asked). You will still receive the promised monetary compensation and a detailed explanation of the study’s aims and hypotheses.</p><p>&nbsp;</p><p><u>Contact:</u>&nbsp;If you have questions about this study, please contact Miriam Weaverdyck (psnl.mturk@gmail.edu), Peretsman-Scully Hall, Department of Psychology, Princeton University.</p><p>&nbsp;</p><p><u>Agreement:</u>&nbsp;The purpose and nature of this research have been sufficiently explained and I agree to participate in this study. I understand that I am free to withdraw at any time without incurring any penalty.</p><p>&nbsp;</p><p><strong>Whom to contact about your rights in this research, for questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm.</strong></p><p>Office of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</p>"
     var consent = {
       type: 'survey-multi-choice',
       questions: [''],
       options: [["I agree to participate in this study.", "I DO NOT agree to participate in this study"]],
       required: [true],
       horizontal: false,
-      preamble: consent_text,
+      preamble: consent_text
     };
+    timeline.push(consent);
     
-    // Next "What is your TurkPrime ID?"
-    var get_id = {
+    // 1 - Next "What is your TurkPrime ID?"
+    var turkprime_id = {
       type: 'survey-text',
       questions: ['What is your TurkPrime ID?'],
     };
+    timeline.push(turkprime_id);
     
-    // Next a multiple choice survey.
-    // What is your gender? Female, Male, Other
-    // What is your age? "18 to 22 years", "23 to 36 years", "37 to 55 years", "56 to 70", ">70 years"
-    // Which political party do you identify with more? Democratic Party, Republican Party
-    // Please indicate which best matches your political orientation: Liberal, Conservative
-    // Please indicate which best matches your religiosity: Religious, Nonreligious.
-    // Which activity would have (or did) interest you more in high school? Sports, An academic club.
-    // Which area of study interests you more? Arts and humanities; Science, technology, engineering and math
-    
+    // 2 - Next a multiple choice survey to help develop the Far condition for this user
     var survey = {
       type: 'survey-multi-choice',
       questions: ["What is your gender?", "What is your age?",
@@ -55,20 +51,26 @@
                ['Religious', 'Nonreligious'],
                ['Sports', 'An academic club'],
                ['Arts and humanities', 'Science, technology, engineering and math']],
-      required: [true, true, true, true, true, true]
+      required: [true, true, true, true, true, true, true]
     };
+    timeline.push(survey);
     
-    // Next "Think of someone close to you..." Please write his/her first name below.
+    // 3 - Next "Think of someone close to you..." Please write his/her first name below.
     var closename = {
       type: 'survey-text',
-      questions: ['Think of someone close to you, such as a friend or a relative, who is similar to you.  (For example, someone who has a similar personality, experiences the world similarly, has a similar background to you, etc.)  Choose someone whom you know well, as you will be asked to consider them throughout the experiment.  Please write his/her first name below:'],
+      questions: ['Think of someone close to you, such as a friend or a relative, who is similar to you.&nbsp; (For example, someone who has a similar personality, experiences the world similarly, has a similar background to you, etc.)&nbsp; Choose someone whom you know well, as you will be asked to consider them throughout the experiment.&nbsp; Please write his/her first name below:'],
     };
+    timeline.push(closename);
     
-    // Also, indicate this person's gender.
+    // now get the close person's gender, referencing their name
+    // a function to grab closeName once it's been indicated
     function getCloseName() {
       var stuff = jsPsych.data.getDataByTrialIndex(3);
-      return stuff.responses.substring(7, stuff.responses.length-2);
+      stuff = JSON.parse(stuff.responses);
+      return stuff.Q0;
     }
+    
+    // 4 - gender query trial
     var get_othergender = {
       type: 'survey-multi-choice',
       options: [['Female', 'Male', 'Other']],
@@ -76,68 +78,135 @@
         return ["Please indicate the gender of " + getCloseName() + ':'];
       }
     };
+    timeline.push(get_othergender);
     
     // Instructions; multiple pages.
-    instructions1 = '<p>Instructions:</p><p>In this study, we are interested in how you think about mental states: the thoughts and feelings a person may experience. On each question, you will see two mental states terms. For example, you might see the mental state terms "happiness" and "anticipation." Your goal in this task is to judge how similar it is to experience each of these two states.</p><p>For example, on this trial, you should think about a state of happiness and a state of anticipation. You will then rate the similarity of the experiences of happiness and anticipation. There are many ways in which two states might be similar or different, such as how positive they are, how emotional they are, or how intense they are. Try not to focus on any one feature of similarity or difference. Rather consider the states holistically.</p><p><strong>Click this text to continue.</strong></p>';
+    var instructions1 = '<p><span style="font-size:16px;">Instructions:<br /><br />In this study, we are interested in how you think about mental states: the thoughts and feelings a person may experience. On each question, you will see two mental states terms. For example, you might see the mental state terms &quot;happiness&quot; and &quot;anticipation.<span style="font-family: arial,helvetica,sans-serif;">&quot;&nbsp;Your goal in this task is to judge how similar it is to experience each of these two states.</span><br /><br />For example, on this trial, you should think about a state of happiness and a state of anticipation. You will then rate the similarity of the experiences of happiness and anticipation. There are many ways in which two&nbsp;states might be similar or different, such as how positive they are, how emotional they are, or how intense they are. Try not to focus on any one feature of similarity or difference. Rather consider the states holistically.</span></p><p><strong>Click here to continue.</strong></p>';
     var ins1 = {
       type: 'text',
       text: instructions1,
       cont_key: 'mouse',
     };
     
-    instructions2 = '<p>You will be asked to rate the similarity of pairs of states in three ways. Specifically, you will answer questions about your own experiences, the experiences of a person close to you, and the experiences of a person we will introduce you to in a moment. On each question, think carefully about each specific person\'s experiences of each state.</p><p>For example, perhaps some people are more even-keeled than others. These calm or stoic people may experience smaller differences between some of their mental states in comparison with more excitable or lively people.</p><p><strong>Click this text to continue.</strong></p>';
+    var instructions2 = "<p>You will be asked to rate the similarity of pairs of states in three ways. Specifically, you will answer questions about your own experiences, the experiences of a person close to you, and the experiences of a person we will introduce you to in a moment. On each question, think carefully about each specific person's experiences of each state.&nbsp;<div><br></div><div>For example, perhaps some people are more even-keeled than others. These calm or stoic people may experience smaller differences between some of their mental states in comparison with more excitable or lively people.</div></p><p><strong>Click here to continue.</strong></p>";
     var ins2 = {
       type: 'text',
       text: instructions2,
       cont_key: 'mouse',
     };
     
-    instructions3 = "<p>In the next block, you answer questions about your own personal experiences. You will rate how similar two mental states are when you personally experience those states. Think carefully about your unique mental experiences.</p><p><strong>Click this text to continue.</strong></p>";
+    var instructions3 = "<p>In the next block, you answer questions about your own personal experiences. You will rate how similar two mental states are when you personally experience those states. Think carefully about your unique mental experiences.</p><p><strong>Click here to continue.</strong></p>";
     var ins3 = {
       type: 'text',
       text: instructions3,
       cont_key: 'mouse',
     };
+    timeline.push(ins1);
+    timeline.push(ins2);
+    timeline.push(ins3);
     
     // The first task. How similar are <>desire<> and <>embarrassment<> for <>You<>?" Likert scale.
-    
     // Let's generate instructions for each trial.
     // there are 3 clusters of 5 emotions each; each permutation should be tested
     // and of course the ordering of trials should be random
+    // i should have 3 sets of orderings, one for each phase of the experiment
     
     var cluster1 = ["Confident", "Grouchy", "Sad", "Assertive", "Unrestrained"];
     var cluster2 = ["Nervous", "Irritable", "Lively", "Bold", "Talkative"];
     var cluster3 = ["Satisfaction", "Love", "Disgust", "Contempt", "Embarrassment"];
-    var tests = [];
+    var testsA = [];
+    var testsB = [];
+    var testsC = [];
     
     // a nested loop for each cluster should do the job
+    // text functions
+    function getFarName() {
+      var stuff = jsPsych.data.getDataByTrialIndex(2);
+      stuff = JSON.parse(stuff.responses);
+      var gender = stuff.Q0;
+      console.log(gender);
+      var closename = getCloseName();
+      if (gender != 'Female') {
+        if (closename != 'Matt') {
+        return "Matt";
+        } else {
+          return "Jacob";
+        }
+      } else {
+        if (closename != 'Sarah') {
+        return "Sarah";
+        } else {
+          return "Ashley";
+        }
+      }
+    }
+    function testBtext(a, b) {
+      return function() {
+        return ['<p>How similar are <strong>' + a +
+          '</strong> and <strong>' + b+ '</strong> for <strong>' +
+          getCloseName() + '</strong>?</p>'];
+      };
+    }
+    function testCtext(a, b) {
+      return function() {
+        return ['<p>How similar are <strong>' + a +
+          '</strong> and <strong>' + b + '</strong> for <strong>' +
+          getFarName() + '</strong>?</p>'];
+      };
+    }
+    
     // cluster1
-    for (i = 0; i < 5; i++) {
-      for (j = 0; j < 5; j++) {
-          test = '<p>How similar are <strong>' + cluster1[i] +
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+          testA = '<p>How similar are <strong>' + cluster1[i] +
           '</strong> and <strong>' + cluster1[j] + '</strong> for <strong>you</strong>?</p>';
-          tests.push({
-            questions: [test]
+          testB = testBtext(cluster1[i], cluster1[j]);
+          testC = testCtext(cluster1[i], cluster1[j]);
+          testsA.push({
+            questions: [testA]
+          });
+          testsB.push({
+            questions: testB
+          });
+          testsC.push({
+            questions: testC
           });
       }
     }
+    
     // cluster2
-    for (i = 0; i < 5; i++) {
-      for (j = 0; j < 5; j++) {
-          test = '<p>How similar are <strong>' + cluster2[i] +
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+          testA = '<p>How similar are <strong>' + cluster2[i] +
           '</strong> and <strong>' + cluster2[j] + '</strong> for <strong>you</strong>?</p>';
-          tests.push({
-            questions: [test]
+          testB = testBtext(cluster2[i], cluster2[j]);
+          testC = testCtext(cluster2[i], cluster2[j]);
+          testsA.push({
+            questions: [testA]
+          });
+          testsB.push({
+            questions: testB
+          });
+          testsC.push({
+            questions: testC
           });
       }
     }
     // cluster3
-    for (i = 0; i < 5; i++) {
-      for (j = 0; j < 5; j++) {
-          test = '<p>How similar are <strong>' + cluster3[i] +
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+          testA = '<p>How similar are <strong>' + cluster3[i] +
           '</strong> and <strong>' + cluster3[j] + '</strong> for <strong>you</strong>?</p>';
-          tests.push({
-            questions: [test]
+          testB = testBtext(cluster3[i], cluster3[j]);
+          testC = testCtext(cluster3[i], cluster3[j]);
+          testsA.push({
+            questions: [testA]
+          });
+          testsB.push({
+            questions: testB
+          });
+          testsC.push({
+            questions: testC
           });
       }
     }
@@ -146,39 +215,150 @@
         for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
         return o;
     }
-    tests = shuffle(tests);
+    testsA = shuffle(testsA);
+    testsB = shuffle(testsB);
+    testsC = shuffle(testsC);
     
-    // put everything together
-    var test_block = {
+    // put everything together for the self ratings
+    var self_block = {
       type: 'survey-likert',
       labels: [['Very different','','','','','Very similar']],
-      timeline: tests,
+      timeline: testsA,
       required: [true],
     };
+    timeline.push(self_block);
     
-    // Last task. How similar are <>desire<> and <>embarrassment<> for <>friend<>?
-    instructions1b2 = "<p>Please read the short biography below. In the next block, you will be asked to rate this person's mental states. You will rate how similar to mental states are when this person experiences those states. Think carefully about their unique mental experiences.</p>" +
-    "Matt considers himself a typical college student majoring in comparative literature. While Matt respects religion, he does not consider himself religious. He is very involved politically and plans to volunteer for the Republican Party during the 2016 presidential campaign. Matt keeps himself busy at college with extra-curricular activities, such as participating in intramural soccer and tutoring high school students in evolutionary biology. After graduation, he hopes to take a year or two off and then possibly return for graduate school. Matt hopes to have a career that is fulfilling and rewarding.";
-    var ins1b2 = {
+    // now, close ratings
+    // start with instructions
+    var ins4 = {
       type: 'text',
-      text: instructions1b2,
+      text: function() {
+        return "<p>In the next block, you will be asked to rate " + getCloseName() +  "'s mental states. You will rate how similar two mental states are when &nbsp;" + getCloseName() + " experiences those states. Think carefully about their unique mental experiences.</p><p><strong>Click here to continue.</strong></p>";
+      },
       cont_key: 'mouse',
     };
+    timeline.push(ins4);
     
-    // Debrief block...
-    var debrief = {
-      type: 'text',
-      text: '<p>We thank you for your time spent taking this survey.</p><p>Your response has been recorded. Click <strong>here</strong> to see your data.</p>',
-      cont_key: 'mouse',
+    // next the trials
+    var close_block = {
+        type: 'survey-likert',
+        labels: [['Very different','','','','','Very similar']],
+        timeline: testsB,
+        required: [true],
     };
+    timeline.push(close_block);
     
-    // experiment timeline array...
+    // now, far ratings
+    // start with instructions
+    var ins5 = {
+        type: 'text',
+        text: function() {
+            var starttext = "<p>Please read the short biography below. In the next block, you will be asked to rate this person&#39;s mental states. You will rate how similar to mental states are when this person experiences those states. Think carefully about their unique mental experiences.</p><p>";
+            
+            // set far person's name/gender
+            var name = getFarName();
+            var stuff = jsPsych.data.getDataByTrialIndex(2);
+            stuff = JSON.parse(stuff.responses);
+            var fgender = stuff.Q0;
+            var propos, pronoun, cpronoun, major, relig1, relig2, party, activity, conserve1, conserve2;
+            if (name == "Matt"||name == "Jacob") {
+                propos = "him";
+                pronoun = "he";
+                cpronoun = "He";
+            } else {
+                propos = "her";
+                pronoun = "she";
+                cpronoun = "She";
+            }
+            
+            // set major text
+            if (stuff.Q6 == "Arts and humanities"){
+                major = "chemical engineering";
+            } else {
+                major = "comparative literature";
+            }
+    
+            // set religion text
+            if (stuff.Q4 == "Religious"){
+                relig1 = "While " + name + " respects religion, " + pronoun + " does not consider " + propos +"self religious. ";
+                relig2 = "tutoring high school students in evolutionary biology. ";
+            } else {
+                relig1 = cpronoun + " is a devout Christian who attends church every Sunday. ";
+                relig2 = "being an active member of the campus' Christian Fellowship. ";
+            }
+            
+            // set party text
+            if (stuff.Q2 == "Democratic Party") {
+                party = "Republican Party";
+            } else {
+              party = 'Democratic Party';
+            }
+            
+            // set activity text
+            if (stuff.Q5=="Sports"){
+                activity = "chess club";
+            } else {
+                activity = "intramural soccer";
+            }
+    
+            // set conservative text
+            if (stuff.Q3 == "Conservative"){
+                conserve1 = "take a year or two off and then possibly return for graduate school. ";
+                conserve2 = " hopes to have a career that is fulfilling and rewarding.";
+            } else {
+                conserve1 = "settle down to start a family. ";
+                if (fgender != "Female"){
+                    conserve2 = " hopes to have a career that will allow his wife to stay at home and raise a large family.";
+                } else {
+                    conserve2 = " hopes her future husband has a career that will allow his wife to stay at home and raise a large family.";
+                }
+            }
+    
+            return starttext + name + " considers " + propos + "self a typical college student majoring in " + major + ". " + relig1 + cpronoun + " is very involved politically and plans to volunteer for the " + party + " during the 2016 presidential campaign. " + name + " keeps " + propos + "self busy at college with extra-curricular activities, such as participating in " + activity + " and " + relig2 + "After graduation, " + pronoun + " hopes to " + conserve1 + name + conserve2 + '</p><p><strong>Click here to continue.</strong></p>';
+            },
+        cont_key: 'mouse',
+    };
+    timeline.push(ins5);
+    
+    // next the trials
+    var far_block = {
+        type: 'survey-likert',
+        labels: [['Very different','','','','','Very similar']],
+        timeline: testsC,
+        required: [true],
+    };
+    timeline.push(far_block);
+    
+    // now a manipulation check
+    var manipulation_check = {
+        type: 'survey-likert',
+        labels:[['Not at all','','','','','Very much'], ['Not at all','','','','','Very much'], ['Not at all','','','','','Very much']],
+        questions: function() {
+            return ["<p>Please rate " + getFarName() + " on the scales below:</p><p>Is similar to me?</p>", "Is close to me?", "Is familiar to me?"];
+        }
+    };
+    timeline.push(manipulation_check);
+    
+    // debriefing
+    var debrief1 = {
+        type: 'text',
+        text: 'Thank you for completing the questionnaire.<br><br>VERY IMPORTANT: Enter the following completion code in the box found on the Amazon Mechanical Turk page where you accessed this questionnaire link in order to receive payment for your participation.<br><br><strong>zetetic</strong><p><strong>Click here to continue.</strong></p>',
+        cont_key: 'mouse'
+    };
+    var debrief2 = {
+        type: 'text',
+        text: '<span style="font-size:16px;">Thank you for your participation in today&rsquo;s experiment.&nbsp; Our research depends entirely on volunteers such as you, and we appreciate your being willing to commit time and energy to today&rsquo;s experiment</span><p>&nbsp;</p><p><span style="font-size:16px;">For millennia, philosophers have argued that human beings are driven by two forces: emotion and reason. But does the human brain make this distinction when we think about the minds of others? That is, do our brains respond differently when we think about a friend feeling upset by a math problem versus that same friend reasoning about a math problem?&nbsp;Neuroscientists have a good understanding of how the brain responds to thinking about other people, however, little is known about how the brain organizes this knowledge of mental states (e.g., happiness, sadness, thinking).&nbsp;&nbsp;The data that you provided today will help us test new predictions about mental states made by a functional magnetic resonance imaging experiment. We hope to learn whether people judge mental states to be more similar if they experienced by someone psychological distant rather than someone close (or indeed the self).</span></p><p>&nbsp;</p><p><span style="font-size:16px;">For background on this research, you can read the paper:</span></p><p><span style="font-size:16px;">&nbsp; &nbsp; &nbsp;<br />Tamir, D. I.*, Thornton, M. A.*, Contreras, J. M., &amp; Mitchell, J. P. (2016). Neural evidence that three dimensions organize mental state representation: Rationality, social impact, and valence. <em>Proceedings of the National Academy of Sciences, 113</em>(1), 194-199. *equal contributions</span></p><p>&nbsp;</p><p><span style="font-size:16px;">Available here: http://psnlab.princeton.edu/sites/default/files/publications-pdf/TamirThornton_PNAS_inpress.pdf.</span></p><p>&nbsp;</p><p><span style="font-size:16px;">If you have any questions or comments that you would like to share, or if you would like to receive a report of this research when it is completed (or a summary of the findings), please contact Professor Diana Tamir (prsonlab@gmail.com).</span></p><p>&nbsp;</p><p><span style="font-size:16px;">If you have concerns about your rights as a participant in this experiment, please contact&nbsp;Office of Research Integrity and Assurance, Human Research Protection Program, Assistant Director.&nbsp; Phone:&nbsp; (609) 258-0865.&nbsp; E-mail: irb@princeton.edu.</span></p><p>&nbsp;</p><span style="font-size:16px;"> Please do not disclose the research procedures or hypotheses to anyone who might participate in this study between now and the end of the data collection (June 2017) as this could affect the results of the study.&nbsp; Thank you for your participation!</span><p>&nbsp;</p><p><strong>Click here to continue.</strong></p>',
+        cont_key: 'mouse'
+        };
+    timeline.push(debrief1);
+    timeline.push(debrief2);
+    
+    // put all the trials together
     jsPsych.init({
-        timeline: [consent, get_id, survey, closename, get_othergender, ins1, ins2, ins3, test_block, ins1b2, debrief],
-        show_progress_bar: true,
+        timeline: timeline,
         on_finish: function() {
           jsPsych.data.displayData();
         }
     });
-  </script>
+    </script>
 </html>
