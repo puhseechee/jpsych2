@@ -11,16 +11,35 @@
     <body>
     </body>
     <script>
+    // set up the experiment timeline
+    var timeline = [];
+    
+    // consent
+    timeline.push({
+      type: 'survey-multi-choice',
+      questions: [''],
+      options: [["I agree to participate in this study.", "I DO NOT agree to participate in this study"]],
+      required: [true],
+      horizontal: false,
+      preamble: "<p> <strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p><span ><u><br></u></span></p>"
+      });
+    
+    // instructions
+    timeline.push({type: 'text', cont_key: 'mouse', text: "For a future experiment examining social cognition, our lab is collecting photos of strangers taking on different facial expressions. In the following window, please use the accompanying web app to take a photo of yourself with the indicated facial expression. As a feature of our experiment, your photo will be shown to around 100 people, so please take care to clearly convey the expression indicated."});
+    
+    // seek photo, use "smile" prompt
+    timeline.push({type: 'photo-upload', prompt: '<div align="center"><p>Smile<p></div>'});
+    
+    // ask how happy they are on likert scale
+    // ask how how much they consider themselves a happy person
+    timeline.push({type: 'text', cont_key: 'mouse', text: "In the following section, we want to ask you a few questions about your emotional state. You will be presented with a series of statements; indicate by selecting the appropriate radio button how much you believe the statement applies to you."});
+    timeline.push({type: 'survey-likert',
+                  questions: ["I am happy.", "Overall, I consider myself a happy person."],
+                  labels: [["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"], ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]]});
 
-/* gradient!
-*/
-    var hello_trial = {
-        type: 'photo-upload',
-        prompt: '<p>Hello world!<p>',
-    };
-
+    // that's it
     jsPsych.init({
-        timeline: [ hello_trial ],
+        timeline: timeline,
         on_finish: function() {
           jsPsych.data.displayData();
         }
