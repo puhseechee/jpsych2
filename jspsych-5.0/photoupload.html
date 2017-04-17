@@ -6,7 +6,7 @@
         <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/jspsych.js"></script>
         <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-photo-upload.js"></script>
         <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-text.js"></script>
-        <script src="https://github.com/puhseechee/jpsych2/blob/jpsychadd/jspsych-5.0/plugins/jspsych-survey-likert.js"></script>
+        <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-likert.js"></script>
         <script src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/plugins/jspsych-survey-multi-choice.js"></script>
         <link href="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <link href="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/css/photoupload.css" rel="stylesheet" type="text/css"></link>
@@ -28,14 +28,14 @@
       });
     
     // instructions
-    timeline.push({type: 'text', cont_key: 'mouse', text: "For a future experiment examining social cognition, our lab is collecting photos of strangers taking on different facial expressions. In the following window, please use the accompanying web app to take a photo of yourself with the indicated facial expression. As a feature of our experiment, your photo will be shown to around 100 people, so please take care to clearly convey the expression indicated."});
+    timeline.push({type: 'text', cont_key: 'mouse', text: "<p>For a future experiment examining social cognition, our lab is collecting photos of strangers taking on different facial expressions. In the following window, please use the accompanying web app to take a photo of yourself with the indicated facial expression. As a feature of our experiment, your photo will be shown to around 100 people, so please take care to clearly convey the expression indicated.</p><p>&nbsp;</p><p><strong>Click here to continue.</strong></p>"});
     
     // seek photo, use "smile" prompt
     timeline.push({type: 'photo-upload', prompt: '<div align="center"><p>Smile<p></div>'});
     
     // ask how happy they are on likert scale
     // ask how how much they consider themselves a happy person
-    timeline.push({type: 'text', cont_key: 'mouse', text: "In the following section, we want to ask you a few questions about your emotional state. You will be presented with a series of statements; indicate by selecting the appropriate radio button how much you believe the statement applies to you."});
+    timeline.push({type: 'text', cont_key: 'mouse', text: "<p>In the following section, we want to ask you a few questions about your emotional state. You will be presented with a series of statements; indicate by selecting the appropriate radio button how much you believe the statement applies to you.</p><p>&nbsp;</p><p><strong>Click here to continue.</strong></p>"});
     timeline.push({type: 'survey-likert',
                   questions: ["I am happy.", "Overall, I consider myself a happy person."],
                   labels: [["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"], ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]]});
