@@ -41,7 +41,6 @@ jsPsych.plugins['photo-upload'] = (function(){
         <div class="controls">\
           <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> \
           <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>\
-          <a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a>  \
         </div>\
     \
         <!-- Hidden canvas element. Used for taking snapshot of video. -->\
@@ -58,7 +57,6 @@ jsPsych.plugins['photo-upload'] = (function(){
         controls = document.querySelector('.controls'),
         take_photo_btn = document.querySelector('#take-photo'),
         delete_photo_btn = document.querySelector('#delete-photo'),
-        download_photo_btn = document.querySelector('#download-photo'),
         error_message = document.querySelector('#error-message');
 
     // The getUserMedia interface is used for handling camera input.
@@ -125,12 +123,8 @@ jsPsych.plugins['photo-upload'] = (function(){
       image.setAttribute('src', snap);
       image.classList.add("visible");
     
-      // Enable delete and save buttons
+      // Enable delete button
       delete_photo_btn.classList.remove("disabled");
-      download_photo_btn.classList.remove("disabled");
-    
-      // Set the href attribute of the download button to the snap url.
-      download_photo_btn.href = snap;
     
       // Pause video playback of stream.
       video.pause();
@@ -146,9 +140,8 @@ jsPsych.plugins['photo-upload'] = (function(){
       image.setAttribute('src', "");
       image.classList.remove("visible");
     
-      // Disable delete and save buttons
+      // Disable delete button
       delete_photo_btn.classList.add("disabled");
-      download_photo_btn.classList.add("disabled");
     
       // Resume playback of stream.
       video.play();
