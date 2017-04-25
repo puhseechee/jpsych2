@@ -13,6 +13,7 @@ jsPsych.plugins['photo-upload'] = (function(){
   var plugin = {};
 
   plugin.trial = function(display_element, trial){
+    
     // allow variables as functions
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
     
@@ -28,27 +29,7 @@ jsPsych.plugins['photo-upload'] = (function(){
     }
     
     // other stuff
-    display_element.append('<div class="container"> \
-    \
-      <div class="app">\
-    \
-        <a href="#" id="start-camera" class="visible">Touch here to start the app.</a>\
-        <video id="camera-stream"></video>\
-        <img id="snap">\
-    \
-        <p id="error-message"></p>\
-    \
-        <div class="controls">\
-          <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> \
-          <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>\
-        </div>\
-    \
-        <!-- Hidden canvas element. Used for taking snapshot of video. -->\
-        <canvas></canvas>\
-    \
-      </div>\
-    \
-    </div>');
+    display_element.append('<div class="container"> <div class="app"> <a href="#" id="start-camera" class="visible">Touch here to start the app.</a> <video id="camera-stream"></video> <img id="snap"> <p id="error-message"></p> <div class="controls"> <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a> <a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a> </div> <!-- Hidden canvas element. Used for taking snapshot of video. --> <canvas></canvas> </div> </div>');
     
     // References to all the elements we will need
     var video = document.querySelector('#camera-stream'),
@@ -66,11 +47,11 @@ jsPsych.plugins['photo-upload'] = (function(){
                           navigator.mozGetUserMedia ||
                           navigator.msGetUserMedia);
     
+    // set up the camera; special condition in case this fails
     if(!navigator.getMedia){
       displayErrorMessage("Your browser doesn't have support for the navigator.getUserMedia interface.");
     }
     else{
-    
       // Request the camera.
       navigator.getMedia(
         {
@@ -95,26 +76,21 @@ jsPsych.plugins['photo-upload'] = (function(){
           displayErrorMessage("There was an error with accessing the camera stream: " + err.name, err);
         }
       );
-    
     }
-    
-    
     
     // Mobile browsers cannot play video without user input,
     // so here we're using a button to start it manually.
     start_camera.addEventListener("click", function(e){
-    
       e.preventDefault();
     
       // Start video playback manually.
       video.play();
       showVideo();
-    
     });
     
-    
+    // make the take photo button work
+    // 
     take_photo_btn.addEventListener("click", function(e){
-    
       e.preventDefault();
     
       var snap = takeSnapshot();
@@ -128,12 +104,10 @@ jsPsych.plugins['photo-upload'] = (function(){
     
       // Pause video playback of stream.
       video.pause();
-    
     });
     
     
     delete_photo_btn.addEventListener("click", function(e){
-    
       e.preventDefault();
     
       // Hide image.
@@ -145,6 +119,10 @@ jsPsych.plugins['photo-upload'] = (function(){
     
       // Resume playback of stream.
       video.play();
+      
+      // hide the whole thing
+      app = document.getElementByClass('container');
+      app.style.display = 'none';
     
     });
     
