@@ -121,7 +121,7 @@ jsPsych.plugins['photo-upload'] = (function(){
       video.play();
       
       // hide the whole thing
-      app = document.getElementByClass('container');
+      app = document.getElementByClassName('container');
       app.style.display = 'none';
     
     });
