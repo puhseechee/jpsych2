@@ -24,14 +24,14 @@
       options: [["I agree to participate in this study.", "I DO NOT agree to participate in this study"]],
       required: [true],
       horizontal: false,
-      preamble: "<p> <strong>Please read this consent form carefully before deciding whether you would like to participate in this study.</strong></p><p><span ><u><br></u></span></p>"
+      preamble: "HARVARD BUSINESS SCHOOL<br> <strong>Principal Investigator: Leslie John</strong><br> &nbsp;<br> We are asking you to participate in a research study. This form will give you some information about the study. Please read the form carefully before proceeding.<br> &nbsp;<br> <strong>A.&nbsp; Project Description</strong><br> 1.&nbsp; In this study you will take and upload a photo of yourself within your web browser. Then, you will answer some questions regarding your experience.<br>2.&nbsp; The estimated time to complete this study is approximately 5 minutes.<br> 3.&nbsp;&nbsp; The research is being conducted with the goal of publication in academic journals and presentation at academic conferences. <div><br> &nbsp;<br> <br> <strong>B. Risks and Benefits</strong><br> 1. Your participation in this study does not involve any&nbsp;physical or emotional risk to you beyond those of daily life.<br> 2. You have the right to withdraw your consent or discontinue participation at any time for any reason. Your decision to withdraw will not involve any penalty or loss of benefits to which you are entitled.&nbsp;<br> 3. The potential benefit of the study is a better scientific understanding of the psychological underpinnings that govern task performance.<br> &nbsp;<br> <br> <strong>C. Compensation</strong><br> At the end of the session, you will be compensated $0.60 for your participation.</div><div>Of the $0.60, $0.20 will be given to you in the form of bonus payment. (Everybody will receive this bonus)<br> <br> <br> <strong>D. Confidentiality</strong><br> The data we collect will be kept confidential. Your MTurk ID will be stored separately from your responses to the survey questions, in a locked office in a locked file cabinet or on a password-protected computer. We won’t use any information that would identify you in our publications or presentations. The information with your ID will be analyzed by the researcher(s) and may be reviewed by people checking to see that the research is done properly.<br> &nbsp;<br> <strong>E. Contacts</strong><br> 1. If you have any questions or concerns about this study, you may contact Jaewon Yoon at jyoon@hbs.edu .<br> 2. If you have any questions about your rights as a participant in this research, please contact the Committee on the Use of Human Subjects in Research at Harvard University, Phone:&nbsp; 617-496-CUHS (2847).&nbsp; Email: cuhs@fas.harvard.edu.<br> &nbsp;<br> <br> <strong>F. Subject rights</strong><br> Your participation in this study is entirely voluntary, and you may refuse to participate or withdraw from the study without penalty or loss of benefits to which you may otherwise be entitled.<br> &nbsp;</div>"
       });
     
     // instructions
-    timeline.push({type: 'text', cont_key: 'mouse', text: "<p>For an experiment examining social cognition, our lab is collecting photos of strangers taking on different facial expressions. In the following window, please use the accompanying web app to take a photo of yourself with the indicated facial expression. Please take care to clearly convey the expression indicated.</p><p>&nbsp;</p><p><strong>Click here to continue.</strong></p>"});
+    timeline.push({type: 'text', cont_key: 'mouse', text: "Welcome to our study!&nbsp;<div><br></div><div>On the next page, please use the accompanying web app to take a photo of yourself with the indicated facial expression. Take care to clearly convey the expression indicated.</div><div><div><br> <strong>Click here to continue.</strong></div></div>"});
     
-    // seek photo, use "smile" prompt
-    timeline.push({type: 'photo-upload', prompt: '<div align="center"><p>Smile<p></div>'});
+    // seek photo, show it to user; use "smile" prompt; depending on condition, act as if the photo were shown to no one, a few people, or many people
+    timeline.push({type: 'photo-upload', condition: Math.floor(Math.random() * 3) + 1, prompt: '<div align="center"><p>Smile<p></div>'});
     
     // ask how happy they are on likert scale
     // ask how how much they consider themselves a happy person
@@ -39,7 +39,8 @@
     timeline.push({type: 'survey-likert',
                   questions: ["I am happy.", "Overall, I consider myself a happy person."],
                   labels: [["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"], ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]]});
-
+    
+    // need one more set of questions 
     // that's it
     jsPsych.init({
         timeline: timeline,
