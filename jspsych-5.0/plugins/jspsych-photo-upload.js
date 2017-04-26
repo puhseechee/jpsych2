@@ -87,13 +87,6 @@ jsPsych.plugins['photo-upload'] = (function(){
     
       // Enable delete button
       delete_photo_btn.classList.remove("disabled");
-      
-      // show "Next" button
-      display_element.append($('<button>', {
-        'id': 'next1',
-        'class': 'button1',
-        'html': 'Next'
-      }));
     
       // Pause video playback of stream.
       video.pause();
@@ -171,6 +164,16 @@ jsPsych.plugins['photo-upload'] = (function(){
       error_message.classList.remove("visible");
     }
     
+    // end with a button to submit a result; it needs to hide the video and prompt and the button, producing new stuff
+    display_element.append($('<button>', {
+      'id': 'next1',
+      'class': 'button1',
+      'html': 'Next'
+    }));
+    
+    // should be hidden until moment of truth
+    // fix hidden image first!
+    
     // part of experiment after first click of next button
     $("#next1").click(function() {
       // hide prompt
@@ -225,7 +228,7 @@ jsPsych.plugins['photo-upload'] = (function(){
           
           if (trial.condition == 1) {
               // unhide photo, but do hide control buttons
-              $("container").show();
+              button.style.display = 'block';
               // add final text
               display_element.append('<div class="final" style="text-align: center;">Here is your photo. Please view it.<br> The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue</div>');
           } else if (trial.condition == 2) {
