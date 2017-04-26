@@ -1,37 +1,26 @@
-/**
- * jspsych-word-referent
- * a jspsych plugin for word-referent pair trails.
- *
- * Jordan Gunn
- *
- * partial documentation: docs.jspsych.org
- *
- */
-
 jsPsych.plugins['photo-upload'] = (function(){
 
   var plugin = {};
-
   plugin.trial = function(display_element, trial){
-    
     // allow variables as functions
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
     
     // set default values for the parameters;
     trial.prompt = trial.prompt || "";
-    
+
     // for rt
     var startTime = (new Date()).getTime();
     
+    // now we want to do an initial append of every html object
+    
     // display prompt if there is one
-    if (trial.prompt !== "") {
-      display_element.append('<b><p style="text-align:center;">' + trial.prompt + "</p></b>");
-    }
+    if (trial.prompt !== "") {display_element.append('<div class="prompt" align="center"><p>' + trial.prompt + "</p></div>");}
     
-    // other stuff
+    // then the photo stuff
     display_element.append('<div class="container"> <div class="app"> <a href="#" id="start-camera" class="visible">Touch here to start the app.</a> <video id="camera-stream"></video> <img id="snap"> <p id="error-message"></p> <div class="controls"> <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a> <a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a> </div> <!-- Hidden canvas element. Used for taking snapshot of video. --> <canvas></canvas> </div> </div>');
-    
-    // References to all the elements we will need
+
+    // now photo code
+        // References to all the elements we will need
     var video = document.querySelector('#camera-stream'),
         image = document.querySelector('#snap'),
         start_camera = document.querySelector('#start-camera'),
@@ -89,7 +78,6 @@ jsPsych.plugins['photo-upload'] = (function(){
     });
     
     // make the take photo button work
-    // 
     take_photo_btn.addEventListener("click", function(e){
       e.preventDefault();
     
@@ -106,7 +94,7 @@ jsPsych.plugins['photo-upload'] = (function(){
       video.pause();
     });
     
-    
+    // make the delete photo button work
     delete_photo_btn.addEventListener("click", function(e){
       e.preventDefault();
     
@@ -119,15 +107,9 @@ jsPsych.plugins['photo-upload'] = (function(){
     
       // Resume playback of stream.
       video.play();
-      
-      // hide the whole thing
-      app = document.getElementsByClassName('container')[0];
-      app.style.display = 'none';
-    
     });
     
-    
-    
+    // code to show video stream
     function showVideo(){
       // Display the video stream and the controls.
     
@@ -136,7 +118,7 @@ jsPsych.plugins['photo-upload'] = (function(){
       controls.classList.add("visible");
     }
     
-    
+    // code to take a snapshot of video stream
     function takeSnapshot(){
       // Here we're using a trick that involves a hidden canvas element.  
     
@@ -160,7 +142,7 @@ jsPsych.plugins['photo-upload'] = (function(){
       }
     }
     
-    
+    // for displaying error messages
     function displayErrorMessage(error_msg, error){
       error = error || "";
       if(error){
@@ -184,30 +166,89 @@ jsPsych.plugins['photo-upload'] = (function(){
       error_message.classList.remove("visible");
     }
     
-    // submit button
+    // end with a button to submit a result; it needs to hide the video and prompt and the button, producing new stuff
     display_element.append($('<button>', {
-      'id': 'next',
-      'class': 'button-submit',
-      'html': 'Submit'
+      'id': 'next1',
+      'class': 'button1',
+      'html': 'Next'
     }));
     
-    $("#next").click(function() {
-      display_element.html(''); // clear the display
-      
-      // measure response time
-      var endTime = (new Date()).getTime();
-      var response_time = endTime - startTime;
-      
-      // data saving
-      var trialdata = {
-        rt: response_time,
-        prompt: trial.prompt,
-      };
-      
-      jsPsych.finishTrial(trialdata); // end
+    // part of experiment after first click of next button
+    $("#next1").click(function() {
+        // hide prompt
+        prompthtml = document.getElementsByClassName('prompt')[0];
+        prompthtml.style.display = 'none';
+        
+        // hide photo
+        app = document.getElementsByClassName('container')[0];
+        app.style.display = 'none';
+        
+        // hide button
+        button = document.getElementsByClassName('button1')[0];
+        button.style.display = 'none';
+
+        // then follow up instructions (dependent on condition)
+        if (trial.condition == 1) {
+            display_element.append('<div class="followup">Thank you for uploading a photo of yourself smiling!&nbsp;<div><br></div><div>Next, we would like you to view your photo.</div><div>Your photo will be posted on the next page, and viewed by you.&nbsp;</div><div><br></div><div>Please click "Next" to continue.&nbsp;</div></div>');
+        } else {
+            display_element.append('<div class="followup">Thank you for uploading a photo of yourself smiling!!<br> <br> Next, we would like to share your photo with other MTurk workers who are standing by and participating in a different study.&nbsp;<div>In a moment, your photo will be posted on our server, and these other MTurk workers will view your photo. On the next page, you will see your photo post, along with how many MTurk workers are viewing it.&nbsp;<div><div><br></div><div>Please click "Next" to continue.&nbsp;</div></div></div></div>');
+        }
+        
+        // a new button
+        display_element.append($('<button>', {
+            'id': 'next2',
+            'class': 'button2',
+            'html': 'Next'
+        }));
     });
-  };
-
+    
+    // part of experiment after second click of next button
+    $("#next2").click(function() {
+        // hide followup instructions
+        followup = document.getElementsByClassName('followup')[0];
+        followup.style.display = 'none';
+        
+        // hide button
+        button = document.getElementsByClassName('button2')[0];
+        button.style.display = 'none';
+        
+        // then server loading page
+        if (trial.condition == 1) {
+            display_element.append('<div class="loading"><div style="text-align: center;">Please wait while the server loads.<br> <br> <img src="https://raw.githubusercontent.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/loading.gif" style="width: 144px; height: 144px;"></div></div>');
+        } else {
+            display_element.append('<div class="loading"><div style="text-align: center;">Please wait while we upload your message on our server.<br> <br> <img src="https://raw.githubusercontent.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/loading.gif" style="width: 144px; height: 144px;"></div></div>');
+        }
+        
+        // after 3 seconds, move on to the next step
+        setTimeout(function(){
+            next3();
+        }, 3000);
+    });
+    
+    // third part is initiated after a timeout; for now, just end the experiment
+    function next3() {
+        if (trial.condition == 1) {
+            
+        } else if (trial.condition == 2) {
+            
+        } else {
+            
+        }
+        display_element.html(''); // clear the display
+              
+        // measure response time
+        var endTime = (new Date()).getTime();
+        var response_time = endTime - startTime;
+        
+        // data saving
+        var trialdata = {
+          rt: response_time,
+          prompt: trial.prompt,
+        };
+        
+        jsPsych.finishTrial(trialdata); // end
+    }
+    
   return plugin;
-
+  };
 })();
