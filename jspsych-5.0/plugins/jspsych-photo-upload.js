@@ -227,7 +227,7 @@ jsPsych.plugins['photo-upload'] = (function(){
               
               if (trial.condition == 1) {
                   // unhide photo, but do hide control buttons
-                  app.show();
+                  $("container").show();
                   // add final text
                   display_element.append('<div class="final" style="text-align: center;">Here is your photo. Please view it.<br> The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue</div>');
               } else if (trial.condition == 2) {
