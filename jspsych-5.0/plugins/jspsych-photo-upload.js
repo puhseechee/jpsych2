@@ -10,17 +10,19 @@ jsPsych.plugins['photo-upload'] = (function(){
     trial.prompt = trial.prompt || "";
     
     // now we want to do an initial append of every html object
-    // the photo stuff
-    display_element.append('<div class="container"> <div class="app"> <a href="#" id="start-camera" class="visible">Touch here to start the app.</a> <video id="camera-stream"></video> <img id="snap"> <p id="error-message"></p> <div class="controls"> <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a></div> <!-- Hidden canvas element. Used for taking snapshot of video. --> <canvas></canvas> </div> </div>');
-
+    
     // display prompt if there is one
     if (trial.prompt !== "") {display_element.append('<div class="prompt" align="center"><p>' + trial.prompt + "</p></div>");}
     
+    // then the photo stuff
+    display_element.append('<div class="container"> <div class="app"> <a href="#" id="start-camera" class="visible">Touch here to start the app.</a> <video id="camera-stream"></video> <img id="snap"> <p id="error-message"></p> <div class="controls"> <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a></div> <!-- Hidden canvas element. Used for taking snapshot of video. --> <canvas></canvas> </div> </div>');
+
     // end with a button to submit a result; it needs to hide the video and prompt and the button, producing new stuff
     display_element.append($('<button>', {
       'id': 'next1',
       'class': 'button1',
-      'html': 'Next'
+      'html': 'Submit',
+      'text-align': 'center'
     }));
     
     // hide button
