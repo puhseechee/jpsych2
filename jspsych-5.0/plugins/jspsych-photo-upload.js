@@ -191,7 +191,7 @@ jsPsych.plugins['photo-upload'] = (function(){
         if (trial.condition == 1) {
             display_element.append('<div class="followup">Thank you for uploading a photo of yourself smiling!&nbsp;<div><br></div><div>Next, we would like you to view your photo.</div><div>Your photo will be posted on the next page, and viewed by you.&nbsp;</div><div><br></div><div>Please click "Next" to continue.&nbsp;</div></div>');
         } else {
-            display_element.append('<div class="followup">Thank you for uploading a photo of yourself smiling!!<br> <br> Next, we would like to share your photo with other MTurk workers who are standing by and participating in a different study.&nbsp;<div>In a moment, your photo will be posted on our server, and these other MTurk workers will view your photo. On the next page, you will see your photo post, along with how many MTurk workers are viewing it.&nbsp;<div><div><br></div><div>Please click "Next" to continue.&nbsp;</div></div></div></div>');
+            display_element.append('<div class="followup">Thank you for uploading a photo of yourself smiling!<br> <br> Next, we would like to share your photo with other MTurk workers who are standing by and participating in a different study.&nbsp;<div>In a moment, your photo will be posted on our server, and these other MTurk workers will view your photo. On the next page, you will see your photo post, along with how many MTurk workers are viewing it.&nbsp;<div><div><br></div><div>Please click "Next" to continue.&nbsp;</div></div></div></div>');
         }
         
         // a new button
@@ -200,54 +200,50 @@ jsPsych.plugins['photo-upload'] = (function(){
             'class': 'button2',
             'html': 'Next'
         }));
+        
+        // part of experiment after second click of next button
+        $("#next2").click(function() {
+            // hide followup instructions
+            followup = document.getElementsByClassName('followup')[0];
+            followup.style.display = 'none';
+            
+            // hide button
+            button = document.getElementsByClassName('button2')[0];
+            button.style.display = 'none';
+            
+            // then server loading page
+            if (trial.condition == 1) {
+                display_element.append('<div class="loading"><div style="text-align: center;">Please wait while the server loads.<br> <br> <img src="https://raw.githubusercontent.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/loading.gif" style="width: 144px; height: 144px;"></div></div>');
+            } else {
+                display_element.append('<div class="loading"><div style="text-align: center;">Please wait while we upload your message on our server.<br> <br> <img src="https://raw.githubusercontent.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/loading.gif" style="width: 144px; height: 144px;"></div></div>');
+            }
+            
+            // after 3 seconds, move on to the next step
+            // for now, just end the experiment
+            setTimeout(function(){
+                if (trial.condition == 1) {
+                
+            } else if (trial.condition == 2) {
+                
+            } else {
+                
+            }
+            display_element.html(''); // clear the display
+                  
+            // measure response time
+            var endTime = (new Date()).getTime();
+            var response_time = endTime - startTime;
+            
+            // data saving
+            var trialdata = {
+              rt: response_time,
+              prompt: trial.prompt,
+            };
+            
+            jsPsych.finishTrial(trialdata); // end
+            }, 3000);
+        });
     });
-    
-    // part of experiment after second click of next button
-    $("#next2").click(function() {
-        // hide followup instructions
-        followup = document.getElementsByClassName('followup')[0];
-        followup.style.display = 'none';
-        
-        // hide button
-        button = document.getElementsByClassName('button2')[0];
-        button.style.display = 'none';
-        
-        // then server loading page
-        if (trial.condition == 1) {
-            display_element.append('<div class="loading"><div style="text-align: center;">Please wait while the server loads.<br> <br> <img src="https://raw.githubusercontent.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/loading.gif" style="width: 144px; height: 144px;"></div></div>');
-        } else {
-            display_element.append('<div class="loading"><div style="text-align: center;">Please wait while we upload your message on our server.<br> <br> <img src="https://raw.githubusercontent.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/loading.gif" style="width: 144px; height: 144px;"></div></div>');
-        }
-        
-        // after 3 seconds, move on to the next step
-        setTimeout(function(){
-            next3();
-        }, 3000);
-    });
-    
-    // third part is initiated after a timeout; for now, just end the experiment
-    function next3() {
-        if (trial.condition == 1) {
-            
-        } else if (trial.condition == 2) {
-            
-        } else {
-            
-        }
-        display_element.html(''); // clear the display
-              
-        // measure response time
-        var endTime = (new Date()).getTime();
-        var response_time = endTime - startTime;
-        
-        // data saving
-        var trialdata = {
-          rt: response_time,
-          prompt: trial.prompt,
-        };
-        
-        jsPsych.finishTrial(trialdata); // end
-    }
   };
   return plugin;
 })();
