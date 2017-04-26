@@ -241,6 +241,7 @@ jsPsych.plugins['photo-upload'] = (function(){
           }
           
           // no matter what, we want a final "Next Button" to finish the trial with
+          setTimeout(function() {
           display_element.append($('<button>', {
             'id': 'nextlast',
             'class': 'buttonlast',
@@ -258,6 +259,8 @@ jsPsych.plugins['photo-upload'] = (function(){
             
             jsPsych.finishTrial(trialdata); // end
           });
+          }, 3000);
+          
         }, 3000);
         });
       });
