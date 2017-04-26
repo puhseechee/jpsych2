@@ -248,7 +248,6 @@ jsPsych.plugins['photo-upload'] = (function(){
         
         jsPsych.finishTrial(trialdata); // end
     }
-    
-  return plugin;
   };
+  return plugin;
 })();
