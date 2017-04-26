@@ -221,27 +221,42 @@ jsPsych.plugins['photo-upload'] = (function(){
             // after 3 seconds, move on to the next step
             // for now, just end the experiment
             setTimeout(function(){
-                if (trial.condition == 1) {
-                
+            if (trial.condition == 1) {
+                // unhide photo, but do hide control buttons
+                app.show();
+                // add final text
+                display_element.append('<div class="final" style="text-align: center;">Here is your photo. Please view it.<br> The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue</div>');
             } else if (trial.condition == 2) {
-                
+                // show everything that was in the other one
+                display_element.append('<div style="text-align: center;">Please wait while other participants view and read your message.&nbsp; &nbsp;</div><div style="text-align: center;"><br><b> Participants currently viewing your message:&nbsp;</b></div> <div style="text-align: center;">&nbsp;</div> <div style="text-align: center;"> <video autoplay="" class="qmedia" height="240" peload="auto" width="360"><source src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/Alone_30sec.mp4" type="video/mp4"> <embed align="middle" autoplay="true" bgcolor="white" class="qmedia" height="240" pluginspage="http://www.apple.com/quicktime/download/" src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/3user_15sec.mp4" type="video/quicktime" width="360"></video>&nbsp;</div><div style="text-align: center;"><br> The "Next" button will appear in a few moments.&nbsp;</div> <div style="text-align: center;">Please click it to continue.</div>');
             } else {
-                
+                // same for final condition
+                display_element.append('<div style="text-align: center;"> <div style="text-align: center;">Please wait while other participants view and read your message.&nbsp; &nbsp;</div><div style="text-align: center;"><br><b> Participants currently viewing your message:&nbsp;</b></div> <div style="text-align: center;">&nbsp;</div> <div style="text-align: center;"> <video autoplay="" class="qmedia" height="240" peload="auto" width="360"><source src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/3user_15sec.mp4" type="video/mp4"><embed align="middle" autoplay="true" bgcolor="white" class="qmedia" height="240" pluginspage="http://www.apple.com/quicktime/download/" src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/3user_15sec2.mp4" type="video/quicktime" width="360"></video>&nbsp;</div><div style="text-align: center;"><br> <div style="text-align: center;"> The "Next" button will appear in a few moments.&nbsp;</div> <div style="text-align: center;">Please click it to continue.</div> </div></div>');
             }
-            display_element.html(''); // clear the display
-                  
-            // measure response time
-            var endTime = (new Date()).getTime();
-            var response_time = endTime - startTime;
             
-            // data saving
-            var trialdata = {
-              rt: response_time,
-              prompt: trial.prompt,
-            };
+            // no matter what, we want a final "Next Button" to finish the trial with
+            display_element.append($('<button>', {
+              'id': 'nextlast',
+              'class': 'buttonlast',
+              'html': 'Next'
+            }));
             
-            jsPsych.finishTrial(trialdata); // end
-            }, 3000);
+            $("#nextlast").click(function() {
+              display_element.html(''); // clear the display
+                    
+              // measure response time
+              var endTime = (new Date()).getTime();
+              var response_time = endTime - startTime;
+              
+              // data saving
+              var trialdata = {
+                rt: response_time,
+                prompt: trial.prompt,
+              };
+              
+              jsPsych.finishTrial(trialdata); // end
+              }, 3000);
+            });
         });
     });
   };
