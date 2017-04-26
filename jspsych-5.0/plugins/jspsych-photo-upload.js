@@ -15,7 +15,7 @@ jsPsych.plugins['photo-upload'] = (function(){
     if (trial.prompt !== "") {display_element.append('<div class="prompt" align="center"><p>' + trial.prompt + "</p></div>");}
     
     // then the photo stuff
-    display_element.append('<div class="container"> <div class="app"> <a href="#" id="start-camera" class="visible">Touch here to start the app.</a> <video id="camera-stream"></video> <img id="snap"> <p id="error-message"></p> <div class="controls"> <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a> <a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a> </div> <!-- Hidden canvas element. Used for taking snapshot of video. --> <canvas></canvas> </div> </div>');
+    display_element.append('<div class="container"> <div class="app"> <a href="#" id="start-camera" class="visible">Touch here to start the app.</a> <video id="camera-stream"></video> <img id="snap"> <p id="error-message"></p> <div class="controls"> <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a></div> <!-- Hidden canvas element. Used for taking snapshot of video. --> <canvas></canvas> </div> </div>');
 
     // now photo code
         // References to all the elements we will need
