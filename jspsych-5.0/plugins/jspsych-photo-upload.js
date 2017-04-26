@@ -259,10 +259,10 @@ jsPsych.plugins['photo-upload'] = (function(){
                 };
                 
                 jsPsych.finishTrial(trialdata); // end
-                }, 3000);
+              });
+            }, 3000);
             });
         });
-    });
-  };
-  return plugin;
-})();
+    };
+      return plugin;
+  });
