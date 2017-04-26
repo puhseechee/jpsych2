@@ -16,6 +16,10 @@
     <script>
     // set up the experiment timeline
     var timeline = [];
+        
+    // establish condition
+    cond = Math.floor(Math.random() * 3) + 1;
+    console.log(cond);
     
     // consent
     timeline.push({
@@ -31,7 +35,6 @@
     timeline.push({type: 'text', cont_key: 'mouse', text: "Welcome to our study!&nbsp;<div><br></div><div>On the next page, please use the accompanying web app to take a photo of yourself with the indicated facial expression. Take care to clearly convey the expression indicated.</div><div><div><br> <strong>Click here to continue.</strong></div></div>"});
     
     // seek photo, show it to user; use "smile" prompt; depending on condition, act as if the photo were shown to no one, a few people, or many people
-    cond = Math.floor(Math.random() * 3) + 1;
     timeline.push({type: 'photo-upload', condition: cond, prompt: '<div align="center"><p>Smile<p></div>'});
     
     // ask how happy they are on likert scale
