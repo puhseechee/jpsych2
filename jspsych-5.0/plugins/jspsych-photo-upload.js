@@ -22,7 +22,7 @@ jsPsych.plugins['photo-upload'] = (function(){
       'id': 'next1',
       'class': 'button1',
       'html': 'Submit',
-      'text-align': 'center'
+      'margin': 'auto'
     }));
     
     // hide button
