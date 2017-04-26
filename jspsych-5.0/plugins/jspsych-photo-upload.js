@@ -1,15 +1,12 @@
 jsPsych.plugins['photo-upload'] = (function(){
 
   var plugin = {};
-  plugin.trial = function(display_element, trial){
+  plugin.trial = (function(display_element, trial){
     // allow variables as functions
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
     
     // set default values for the parameters;
     trial.prompt = trial.prompt || "";
-
-    // for rt
-    var startTime = (new Date()).getTime();
     
     // now we want to do an initial append of every html object
     
@@ -247,15 +244,11 @@ jsPsych.plugins['photo-upload'] = (function(){
               
               $("#nextlast").click(function() {
                 display_element.html(''); // clear the display
-                      
-                // measure response time
-                var endTime = (new Date()).getTime();
-                var response_time = endTime - startTime;
                 
                 // data saving
                 var trialdata = {
-                  rt: response_time,
                   prompt: trial.prompt,
+                  condition: trial.condition,
                 };
                 
                 jsPsych.finishTrial(trialdata); // end
@@ -265,4 +258,4 @@ jsPsych.plugins['photo-upload'] = (function(){
         });
     };
       return plugin;
-  });
+  })();
