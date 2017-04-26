@@ -1,7 +1,8 @@
 jsPsych.plugins['photo-upload'] = (function(){
 
   var plugin = {};
-  plugin.trial = (function(display_element, trial){
+  
+  plugin.trial = function(display_element, trial){
     // allow variables as functions
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
     
@@ -257,5 +258,6 @@ jsPsych.plugins['photo-upload'] = (function(){
             });
         });
     };
+    
       return plugin;
   })();
