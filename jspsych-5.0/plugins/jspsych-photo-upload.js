@@ -17,6 +17,17 @@ jsPsych.plugins['photo-upload'] = (function(){
     // then the photo stuff
     display_element.append('<div class="container"> <div class="app"> <a href="#" id="start-camera" class="visible">Touch here to start the app.</a> <video id="camera-stream"></video> <img id="snap"> <p id="error-message"></p> <div class="controls"> <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a> <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a></div> <!-- Hidden canvas element. Used for taking snapshot of video. --> <canvas></canvas> </div> </div>');
 
+    // end with a button to submit a result; it needs to hide the video and prompt and the button, producing new stuff
+    display_element.append($('<button>', {
+      'id': 'next1',
+      'class': 'button1',
+      'html': 'Next'
+    }));
+    
+    // hide button
+    button = document.getElementsByClassName('button1')[0];
+    button.style.display = 'none';
+    
     // now photo code
         // References to all the elements we will need
     var video = document.querySelector('#camera-stream'),
@@ -87,7 +98,10 @@ jsPsych.plugins['photo-upload'] = (function(){
     
       // Enable delete button
       delete_photo_btn.classList.remove("disabled");
-    
+      
+      // Reveal submit button
+      button.style.display = 'block';
+      
       // Pause video playback of stream.
       video.pause();
     });
@@ -102,6 +116,9 @@ jsPsych.plugins['photo-upload'] = (function(){
     
       // Disable delete button
       delete_photo_btn.classList.add("disabled");
+      
+      // Hide subtmit button
+      button.style.display = 'none';
     
       // Resume playback of stream.
       video.play();
@@ -163,13 +180,6 @@ jsPsych.plugins['photo-upload'] = (function(){
       snap.classList.remove("visible");
       error_message.classList.remove("visible");
     }
-    
-    // end with a button to submit a result; it needs to hide the video and prompt and the button, producing new stuff
-    display_element.append($('<button>', {
-      'id': 'next1',
-      'class': 'button1',
-      'html': 'Next'
-    }));
     
     // should be hidden until moment of truth
     // fix hidden image first!
@@ -259,7 +269,7 @@ jsPsych.plugins['photo-upload'] = (function(){
             
             jsPsych.finishTrial(trialdata); // end
           });
-          }, 3000);
+          }, 3000); // make sure this is 30000 when i want 30 seconds
           
         }, 3000);
         });
