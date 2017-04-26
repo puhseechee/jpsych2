@@ -211,6 +211,7 @@ jsPsych.plugins['photo-upload'] = (function(){
         // hide button
         button = document.getElementsByClassName('button2')[0];
         button.style.display = 'none';
+        controls.classList.remove("visible");
         
         // then server loading page
         if (trial.condition == 1) {
