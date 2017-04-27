@@ -16,10 +16,6 @@
     <script>
     // set up the experiment timeline
     var timeline = [];
-        
-    // establish condition
-    cond = Math.floor(Math.random() * 3) + 1;
-    console.log(cond);
     
     // consent
     timeline.push({
@@ -35,7 +31,7 @@
     timeline.push({type: 'text', cont_key: 'mouse', text: "Welcome to our study!&nbsp;<div><br></div><div>On the next page, please use the accompanying web app to take a photo of yourself with the indicated facial expression. Take care to clearly convey the expression indicated.</div><div><div><br> <strong>Click here to continue.</strong></div></div>"});
     
     // seek photo, show it to user; use "smile" prompt; depending on condition, act as if the photo were shown to no one, a few people, or many people
-    timeline.push({type: 'photo-upload', condition: cond, prompt: '<div align="center"><p>Smile<p></div>'});
+    timeline.push({type: 'photo-upload', condition: Math.floor(Math.random() * 3) + 1, prompt: 'Smile'});
     
     // ask how happy they are on likert scale
     // ask how how much they consider themselves a happy person
@@ -44,7 +40,35 @@
                   questions: ["I am happy.", "Overall, I consider myself a happy person."],
                   labels: [["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"], ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]]});
     
-    // need one more set of questions 
+    // a set of multiple choice questions
+    timeline.push({
+       type: 'survey-multi-choice',
+       required: [true, true, true, true, true],
+       questions: ['What is your gender?', 'What is the highest level of education you have completed?', 'What is your race?', 'What is your annual household income?', "In today's study, after you wrote your support message, what happened to it? (There IS a correct answer.)"],
+       options: [
+            ['Male', 'Female', 'Other'],
+            ['Less than High School', 'High School / GED', 'Some College', '2-year College Degree', '4-year College Degree', 'Masters Degree', 'Doctoral Degree', 'Professional Degree (JD, MD)'],
+            ['White/Caucasian', 'African American', 'Hispanic', 'Asian', 'Native American', 'Pacific Islander', 'Other'],
+            ['Less than 30,000', '30,000 - 39,999', '40,000 - 49,999', '50,000 - 59,999', '60,000 - 69,999', '70,000 - 79,999', '80,000 - 89,999', '90,000 - 99,999', '100,000 or more', 'Prefer not to answer'],
+            ['Nobody read my support message.', '3 participants read my support message.', '10 participants read my support message.', 'I am not sure.'],
+       ],
+    });
+    
+    // and some short-answer questions
+    timeline.push({
+        type: 'survey-text',
+        questions: [
+            'What is your age?',
+            'In which country do you reside? ',
+            'Was there anything weird or suspicious in this study?',
+            'Have you ever participated in a similar study? Please briefly describe the other study in the space below. (If not, just say "No")',
+            'If you had to guess, what do you think the goal of our study is?',
+        ]
+    });
+    
+    // finally a debrief
+    timeline.push({type: 'text', cont_key: 'mouse', text: '<div>Thank you for participating in our study! Please see below for a detailed debrief of our study:</div> <span style="color: rgb(64, 64, 64); font-family: &quot;Qualtrics Grotesque&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15px;">&nbsp;</span> <ol style="box-sizing: border-box; font-family: &quot;Qualtrics Grotesque&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; margin: 0px; padding-right: 0px; padding-left: 0px; list-style: none; color: rgb(64, 64, 64); font-size: 15px;"> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;"><span style="box-sizing: border-box; font-weight: 700;">What was this study about?</span>&nbsp;This study was concerned with how the number of audience moderates the impact of social signaling in determining your opinion or preferences.</li> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;">&nbsp;</li> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;" value="2"><span style="box-sizing: border-box; font-weight: 700;">How was the study conducted?&nbsp;</span>Depending on your experimental condition, In this study, some of you were told that your support message was visible to no one, a few people, or a lot of people. Then we asked you how much of your bonus you would like to donate. We were interested in how the number of people who read your message impacted your commitment to the donation cause.</li><li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;" value="2"><br></li> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;" value="3"><span style="box-sizing: border-box; font-weight: 700;">What was the hypothesis?&nbsp;</span>This is an exploratory study, and we believe the number of people who viewed one\'s message may or may not lead to an enhanced commitment to the message.</li> </ol> <ol style="box-sizing: border-box; font-family: &quot;Qualtrics Grotesque&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; margin: 0px; padding-right: 0px; padding-left: 0px; list-style: none; color: rgb(64, 64, 64); font-size: 15px;"> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;">&nbsp;</li> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;" value="4"><span style="box-sizing: border-box; font-weight: 700;">Did we tell you everything?&nbsp;</span>In our experimental design, we told you that few or many other participants viewed your message. However, this was an experimental manipulation: your message was not visible to anyone other than yourself.<br></li><li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;">&nbsp;</li> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;" value="5"><span style="box-sizing: border-box; font-weight: 700;">Why is this study important? </span><span style="box-sizing: border-box;">These days, many people post their opinions or emotional states in open spaces online. For instance, people post their support for charities on their Facebook, post happy moments on Instagram, and voice out their political opinions on Twitter. This study aims to explore whether the mere act of posting your thoughts in turn be affecting your thoughts in any way.</span></li> </ol> <ol style="box-sizing: border-box; font-family: &quot;Qualtrics Grotesque&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; margin: 0px; padding-right: 0px; padding-left: 0px; list-style: none; color: rgb(64, 64, 64); font-size: 15px;"> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;">&nbsp;</li> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;" value="6"><span style="box-sizing: border-box; font-weight: 700;">How to contact the researcher:&nbsp;&nbsp;</span>If you have questions or concerns about your participation or payment, or want to request a summary of research findings, please contact the researcher: Jaewon Yoon:&nbsp;<a href="mailto:jyoon@hbs.edu" style="box-sizing: border-box; color: rgb(0, 122, 192); text-decoration: none; cursor: pointer; outline: 0px; transition: border-color 0.2s;">jyoon@hbs.edu</a>&nbsp;<br style="box-sizing: border-box;"> You may also contact the principal investigator, Leslie John at&nbsp;<a href="mailto:ljohn@hbs.edu" style="box-sizing: border-box; color: rgb(0, 122, 192); text-decoration: none; cursor: pointer; outline: 0px; transition: border-color 0.2s;">ljohn@hbs.edu</a></li> </ol> <ol style="box-sizing: border-box; font-family: &quot;Qualtrics Grotesque&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; margin: 0px; padding-right: 0px; padding-left: 0px; list-style: none; color: rgb(64, 64, 64); font-size: 15px;"> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;">&nbsp;</li> <li style="box-sizing: border-box; margin: 0px; padding: 0px; list-style: none outside none;" value="7"><span style="box-sizing: border-box; font-weight: 700;">Whom to contact about your rights as a participant in this research:</span>&nbsp;For questions, concerns, suggestions, or complaints that have not been or cannot be addressed by the researcher, or to report research-related harm, please contact the Committee on the Use of Human Subjects in Research at Harvard University, 1414 Massachusetts Avenue, Second Floor, Cambridge, MA&nbsp; 02138.&nbsp; Phone:&nbsp; 617-496-2847.&nbsp; Email:&nbsp;<a href="mailto:cuhs@fas.harvard.edu" style="box-sizing: border-box; color: rgb(0, 122, 192); text-decoration: none; cursor: pointer; outline: 0px; transition: border-color 0.2s;">cuhs@fas.harvard.edu</a></li> </ol><div><strong>Click here to continue.</strong></div>'});
+    
     // that's it
     jsPsych.init({
         timeline: timeline,
