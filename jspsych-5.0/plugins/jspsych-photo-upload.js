@@ -202,11 +202,7 @@ jsPsych.plugins['photo-upload'] = (function(){
       }
       
       // a new button
-      display_element.append($('<button>', {
-          'id': 'next2',
-          'class': 'button2',
-          'html': 'Next'
-      }));
+      display_element.append('<button id="next2" class="button2" style="margin-left: 50%">Next</button>');
       
       // part of experiment after second click of next button
       $("#next2").click(function() {
@@ -248,11 +244,7 @@ jsPsych.plugins['photo-upload'] = (function(){
           
           // no matter what, we want a final "Next Button" to finish the trial with
           setTimeout(function() {
-          display_element.append($('<button>', {
-            'id': 'nextlast',
-            'class': 'buttonlast',
-            'html': 'Next'
-          }));
+            display_element.append('<button id="nextlast" class="buttonlast" style="margin-left: 50%">Next</button>');
           
           $("#nextlast").click(function() {
             display_element.html(''); // clear the display
