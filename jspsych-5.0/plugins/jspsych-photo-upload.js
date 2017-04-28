@@ -7,6 +7,7 @@ jsPsych.plugins['photo-upload'] = (function(){
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
     
     // set default values for the parameters;
+    var MediaStr
     trial.prompt = trial.prompt || "";
     
     // now we want to do an initial append of every html object
@@ -57,6 +58,7 @@ jsPsych.plugins['photo-upload'] = (function(){
           // Create an object URL for the video stream and
           // set it as src of our HTLM video element.
           video.src = window.URL.createObjectURL(stream);
+          MediaStream = stream.getTracks()[0];
     
           // Play the video element to start the stream.
           video.play();
@@ -187,6 +189,7 @@ jsPsych.plugins['photo-upload'] = (function(){
       prompthtml.style.display = 'none';
       
       // hide photo
+      MediaStream.stop()
       app = document.getElementsByClassName('container')[0];
       app.style.display = 'none';
       
