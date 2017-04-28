@@ -7,7 +7,7 @@ jsPsych.plugins['photo-upload'] = (function(){
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
     
     // set default values for the parameters;
-    var MediaStr
+    var MediaStream;
     trial.prompt = trial.prompt || "";
     
     // now we want to do an initial append of every html object
