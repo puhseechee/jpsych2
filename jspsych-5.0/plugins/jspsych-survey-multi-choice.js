@@ -109,6 +109,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       event.preventDefault();
 
       // measure response time
+      var isComplete = true;
       var endTime = (new Date()).getTime();
       var response_time = endTime - startTime;
 
@@ -116,22 +117,28 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       var question_data = {};
       $("div." + plugin_id_name + "-question").each(function(index) {
         var id = "Q" + index;
-        var val = $(this).find("input:radio:checked").val();
+        var val = $(this).find("input:radio:checked").val
+        if (val = '\\') { isComplete = false;}
         var obje = {};
         obje[id] = val;
         $.extend(question_data, obje);
       });
 
-      // save data
-      var trial_data = {
-        "rt": response_time,
-        "responses": JSON.stringify(question_data)
-      };
-
-      display_element.html('');
-
-      // next trial
-      jsPsych.finishTrial(trial_data);
+      // don't finish if 
+      if ((isComplete == false) && (validerror.style.display == 'none')) {
+          validerror.style.display = 'block';
+      } else {
+          // save data
+          var trial_data = {
+            "rt": response_time,
+            "responses": JSON.stringify(question_data)
+          };
+          
+          display_element.html('');
+          
+          // next trial
+          jsPsych.finishTrial(trial_data);
+      }
     });
 
     var startTime = (new Date()).getTime();
