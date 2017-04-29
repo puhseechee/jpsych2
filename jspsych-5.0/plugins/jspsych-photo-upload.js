@@ -231,10 +231,11 @@ jsPsych.plugins['photo-upload'] = (function(){
           loading = document.getElementsByClassName('loading')[0];
           loading.style.display = 'none';
           
+          // unhide photo, but do hide control buttons
+          app.style.display = 'block';
+          controls.classList.remove("visible");
+          
           if (trial.condition == 1) {
-              // unhide photo, but do hide control buttons
-              app.style.display = 'block';
-              controls.classList.remove("visible");
               // add final text
               display_element.append('<div class="final" style="text-align: center;">Here is your photo. Please view it.<br> The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue</div>');
           } else if (trial.condition == 2) {
@@ -260,7 +261,7 @@ jsPsych.plugins['photo-upload'] = (function(){
             
             jsPsych.finishTrial(trialdata); // end
           });
-          }, 10000); // make sure this is 30000 when i want 30 seconds
+          }, 30000); // make sure this is 30000 when i want 30 seconds
           
         }, 3000);
         });
