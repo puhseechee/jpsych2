@@ -5,6 +5,13 @@ jsPsych.plugins['survey-misc'] = (function(){
   plugin.trial = function(display_element, trial){
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
     
+    var plugin_id_name = "jspsych-survey-misc";
+    var plugin_id_selector = '#' + plugin_id_name;
+    var _join = function( /*args*/ ) {
+      var arr = Array.prototype.slice.call(arguments, _join.length);
+      return arr.join(separator = '-');
+    }
+    
     // form element
     var trial_form_id = _join(plugin_id_name, "form");
     display_element.append($('<form>', {
