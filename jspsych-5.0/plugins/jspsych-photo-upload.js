@@ -262,9 +262,9 @@ jsPsych.plugins['photo-upload'] = (function(){
             
             jsPsych.finishTrial(trialdata); // end
           });
-          }, 10000); // make sure this is 30000 when i want 30 seconds
+          }, 500); // make sure this is 30000 when i want 30 seconds
           
-        }, 3000);
+        }, 500);
         });
       });
     };
