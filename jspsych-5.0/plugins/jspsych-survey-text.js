@@ -76,7 +76,7 @@ jsPsych.plugins['survey-text'] = (function() {
 
       // create object to hold responses
       var question_data = {};
-      $("div.jspsych-survey-text-question").each(function(index) {
+      $("div.jspsych-survey-text-question").each(
         var id = "Q" + index;
         var val = $(this).children('textarea').val();
         console.log(val)
@@ -84,7 +84,7 @@ jsPsych.plugins['survey-text'] = (function() {
         var obje = {};
         obje[id] = val;
         $.extend(question_data, obje);
-      });
+      );
 
       // don't finish if 
       if ((isComplete == false) && (validerror.style.display == 'none')) {
