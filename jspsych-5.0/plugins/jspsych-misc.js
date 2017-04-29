@@ -133,7 +133,8 @@ jsPsych.plugins['survey-misc'] = (function() {
       
       // other stuff
       $("div.jspsych-survey-text-question").each(function(index) {
-        var id = "Q" + index;
+        number = index + trial.questions.length;
+        var id = "Q" + number;
         var val = $(this).children('textarea').val();
         var obje = {};
         obje[id] = val;
