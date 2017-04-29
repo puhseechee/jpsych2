@@ -113,14 +113,14 @@ jsPsych.plugins['survey-misc'] = (function() {
     }
 
     // add submit button
-    $trial_form.append($('<input>', {
+    display_element.append($('<input>', {
       'type': 'submit',
       'id': plugin_id_name + '-next',
       'class': plugin_id_name + ' jspsych-btn',
       'value': 'Submit Answers'
     }));
 
-    $trial_form.submit(function(event) {
+    $(plugin_id_name + '-next').click(function(event) {
 
       event.preventDefault();
 
