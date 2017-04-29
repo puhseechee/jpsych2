@@ -103,6 +103,11 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       'class': plugin_id_name + ' jspsych-btn',
       'value': 'Submit Answers'
     }));
+    
+    // make sure questions are answered
+    display_element.append('<div  align="center" class="ValidationError"><font color="red">You didn\'t answer some questions. Are you sure you want to continue?</font><br></div>');
+    validerror = document.getElementsByClassName('ValidationError')[0];
+    validerror.style.display = 'none';
 
     $trial_form.submit(function(event) {
 
