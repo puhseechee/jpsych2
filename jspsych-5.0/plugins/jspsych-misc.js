@@ -152,18 +152,18 @@ jsPsych.plugins['survey-misc'] = (function() {
         // don't finish if 
         if ((isComplete == false) && (validerror.style.display == 'none')) {
             validerror.style.display = 'block';
-            break;}
-        
-        // save data
-        var trial_data = {
-          "rt": response_time,
-          "responses": JSON.stringify(question_data)
-        };
-        
-        display_element.html('');
-        
-        // next trial
-        jsPsych.finishTrial(trial_data);
+        } else {
+            // save data
+            var trial_data = {
+              "rt": response_time,
+              "responses": JSON.stringify(question_data)
+            };
+            
+            display_element.html('');
+            
+            // next trial
+            jsPsych.finishTrial(trial_data);
+        }
     });
 
     var startTime = (new Date()).getTime();
