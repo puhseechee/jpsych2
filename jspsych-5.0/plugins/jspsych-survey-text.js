@@ -53,7 +53,7 @@ jsPsych.plugins['survey-text'] = (function() {
       $("#jspsych-survey-text-" + i).append('<p class="jspsych-survey-text">' + trial.questions[i] + '</p>');
 
       // add text box
-      $("#jspsych-survey-text-" + i).append('<textarea name="#jspsych-survey-text-response-' + i + '" cols="' + trial.columns[i] + '" rows="' + trial.rows[i] + '"></textarea>');
+      $("#jspsych-survey-text-" + i).append('<textarea id= jspsych-survey-text-response-' + i + ' name="#jspsych-survey-text-response-' + i + '" cols="' + trial.columns[i] + '" rows="' + trial.rows[i] + '"></textarea>');
     }
 
     // add submit button
@@ -79,13 +79,16 @@ jsPsych.plugins['survey-text'] = (function() {
       $("div.jspsych-survey-text-question").each(
         var id = "Q" + index;
         var val = $(this).children('textarea').val();
-        console.log(val)
-        if (val == '\\') { isComplete = false;}
         var obje = {};
         obje[id] = val;
         $.extend(question_data, obje);
       );
 
+      for (var i = 0; i < trial.questions.length; i++) {
+        console.log(document.getElementById('jspsych-survey-text-response-' + i).value);
+        if (document.getElementById('jspsych-survey-text-response-' + i).value == ''){isComplete=false}
+      }
+      
       // don't finish if 
       if ((isComplete == false) && (validerror.style.display == 'none')) {
           validerror.style.display = 'block';
