@@ -39,17 +39,16 @@
     // seek photo, show it to user; use "smile" prompt; depending on condition, act as if the photo were shown to no one, a few people, or many people
     timeline.push({type: 'photo-upload', condition: Math.floor(Math.random() * 3) + 1, prompt: 'Please the web app to take a photo of yourself smiling.'});
     
+    // first a single short answer question
+    timeline.push({type: 'survey-text', questions: ['If you had to guess, how many other participants do you think just read your support message? (If you think you were the only person who read your support message, please say "0")']});
+    
     // ask how happy they are on likert scale
     // ask how how much they consider themselves a happy person
-    timeline.push({type: 'text', cont_key: 'mouse', text: "<p>In the following section, we want to ask you a few questions about your emotional state. You will be presented with a series of statements; indicate by selecting the appropriate radio button how much you believe the statement applies to you.</p><p>&nbsp;</p><p><strong>Click here to continue.</strong></p>"});
     timeline.push({type: 'survey-likert',
                   questions: ["I am happy.", "Overall, I consider myself a happy person."],
                   labels: [["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"], ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]]});
     
-    // first a single short answer question
-    timeline.push({type: 'survey-text', questions: ['If you had to guess, how many other participants do you think just read your support message?(If you think you were the only person who read your support message, please say "0")']});
-    
-    // then the dependent variable...
+    // then demographics...
     timeline.push({
         type: 'survey-misc',
         questions: ['What is your gender?', "What is your age?", 'What is the highest level of education you have completed?', 'In which country do you reside?', 'What is your race?', 'What is your annual household income?'],
