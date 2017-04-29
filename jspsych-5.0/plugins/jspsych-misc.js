@@ -31,6 +31,11 @@ jsPsych.plugins['survey-misc'] = (function() {
     // this evaluates the function and replaces
     // it with the output of the function
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
+    
+    
+    display_element.append('<div  align="center" class="ValidationError"><font color="red">You didn\'t answer some questions. Are you sure you want to continue?</font><br></div>');
+    validerror = document.getElementsByClassName('ValidationError')[0];
+    validerror.style.display = 'none';
 
     // form element
     var trial_form_id = _join(plugin_id_name, "form");
@@ -99,58 +104,66 @@ jsPsych.plugins['survey-misc'] = (function() {
     // append two text-based questions, too
     text = ["What is your age?", 'In which country do you reside?'];
     for (var i = 0; i < text.length; i++) {
-      // create div
-      display_element.append($('<div>', {
-        "id": 'jspsych-survey-text-' + i,
-        "class": 'jspsych-survey-text-question'
-      }));
-
-      // add question text
-      $("#jspsych-survey-text-" + i).append('<p class="jspsych-survey-text">' + text[i] + '</p>');
-
-      // add text box
-      $("#jspsych-survey-text-" + i).append('<textarea name="#jspsych-survey-text-response-' + i + '" cols="' + 40 + '" rows="' + 1 + '"></textarea>');
+        // create div
+        display_element.append($('<div>', {
+          "id": 'jspsych-survey-text-' + i,
+          "class": 'jspsych-survey-text-question'
+        }));
+        
+        // add question text
+        $("#jspsych-survey-text-" + i).append('<p class="jspsych-survey-text">' + text[i] + '</p>');
+        
+        // add text box
+        $("#jspsych-survey-text-" + i).append('<textarea name="#jspsych-survey-text-response-' + i + '" cols="' + 40 + '" rows="' + 1 + '"></textarea>');
     }
 
     // add submit button
     display_element.append('<br><div align="center"><button id="next" class="button">Submit</button></div>');
 
     $("#next").click(function() {
-
-      // measure response time
-      var endTime = (new Date()).getTime();
-      var response_time = endTime - startTime;
-
-      // create object to hold responses
-      var question_data = {};
-      $("div." + plugin_id_name + "-question").each(function(index) {
-        var id = "Q" + index;
-        var val = $(this).find("input:radio:checked").val();
-        var obje = {};
-        obje[id] = val;
-        $.extend(question_data, obje);
-      });
-      
-      // other stuff
-      $("div.jspsych-survey-text-question").each(function(index) {
-        number = index + trial.questions.length;
-        var id = "Q" + number;
-        var val = $(this).children('textarea').val();
-        var obje = {};
-        obje[id] = val;
-        $.extend(question_data, obje);
-      });
-
-      // save data
-      var trial_data = {
-        "rt": response_time,
-        "responses": JSON.stringify(question_data)
-      };
-
-      display_element.html('');
-
-      // next trial
-      jsPsych.finishTrial(trial_data);
+        var isComplete = true;
+        
+        // measure response time
+        var endTime = (new Date()).getTime();
+        var response_time = endTime - startTime;
+        
+        // create object to hold responses
+        var question_data = {};
+        $("div." + plugin_id_name + "-question").each(function(index) {
+          var id = "Q" + index;
+          var val = $(this).find("input:radio:checked").val();
+          if (val = '') { isComplete = false;}
+          var obje = {};
+          obje[id] = val;
+          $.extend(question_data, obje);
+        });
+        
+        // other stuff
+        $("div.jspsych-survey-text-question").each(function(index) {
+          number = index + trial.questions.length;
+          var id = "Q" + number;
+          var val = $(this).children('textarea').val();
+          if (val = '') { isComplete = false;}
+          var obje = {};
+          obje[id] = val;
+          $.extend(question_data, obje);
+        });
+        
+        // don't finish if 
+        if ((isComplete == false) && (validerror.style.display == 'none')) {
+            validerror.style.display = 'block';
+            break;}
+        
+        // save data
+        var trial_data = {
+          "rt": response_time,
+          "responses": JSON.stringify(question_data)
+        };
+        
+        display_element.html('');
+        
+        // next trial
+        jsPsych.finishTrial(trial_data);
     });
 
     var startTime = (new Date()).getTime();
