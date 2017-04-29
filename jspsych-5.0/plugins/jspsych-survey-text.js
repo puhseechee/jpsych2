@@ -62,8 +62,15 @@ jsPsych.plugins['survey-text'] = (function() {
       'class': 'jspsych-btn jspsych-survey-text'
     }));
     $("#jspsych-survey-text-next").html('Submit Answers');
+    
+    // make sure questions are answered
+    display_element.append('<div  align="center" class="ValidationError"><font color="red">You didn\'t answer some questions. Are you sure you want to continue?</font><br></div>');
+    validerror = document.getElementsByClassName('ValidationError')[0];
+    validerror.style.display = 'none';
+    
     $("#jspsych-survey-text-next").click(function() {
       // measure response time
+      var isComplete = true;
       var endTime = (new Date()).getTime();
       var response_time = endTime - startTime;
 
@@ -72,21 +79,27 @@ jsPsych.plugins['survey-text'] = (function() {
       $("div.jspsych-survey-text-question").each(function(index) {
         var id = "Q" + index;
         var val = $(this).children('textarea').val();
+        if (val = '\\') { isComplete = false;}
         var obje = {};
         obje[id] = val;
         $.extend(question_data, obje);
       });
 
-      // save data
-      var trialdata = {
-        "rt": response_time,
-        "responses": JSON.stringify(question_data)
-      };
-
-      display_element.html('');
-
-      // next trial
-      jsPsych.finishTrial(trialdata);
+      // don't finish if 
+      if ((isComplete == false) && (validerror.style.display == 'none')) {
+          validerror.style.display = 'block';
+      } else {
+          // save data
+          var trial_data = {
+            "rt": response_time,
+            "responses": JSON.stringify(question_data)
+          };
+          
+          display_element.html('');
+          
+          // next trial
+          jsPsych.finishTrial(trial_data);
+      }
     });
 
     var startTime = (new Date()).getTime();
