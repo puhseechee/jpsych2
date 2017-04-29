@@ -233,7 +233,7 @@ jsPsych.plugins['photo-upload'] = (function(){
           
           // unhide photo, but do hide control buttons
           app.style.display = 'block';
-          app.style.width = '300ppx'
+          app.style.width = '300px'
           controls.classList.remove("visible");
           
           if (trial.condition == 1) {
