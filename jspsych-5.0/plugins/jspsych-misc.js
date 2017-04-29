@@ -113,16 +113,9 @@ jsPsych.plugins['survey-misc'] = (function() {
     }
 
     // add submit button
-    display_element.append($('<input>', {
-      'type': 'submit',
-      'id': plugin_id_name + '-next',
-      'class': plugin_id_name + ' jspsych-btn',
-      'value': 'Submit Answers'
-    }));
+    display_element.append('<br><div align="center"><button id="next" class="button">Submit</button></div>');
 
-    $(plugin_id_name + '-next').click(function(event) {
-
-      event.preventDefault();
+    $("#next").click(function() {
 
       // measure response time
       var endTime = (new Date()).getTime();
