@@ -86,14 +86,6 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
         var input_id_name = _join(plugin_id_name, 'response', i);
         $(option_id_selector + " label").prepend('<input type="radio" name="' + input_id_name + '" value="' + trial.options[i][j] + '">');
       }
-
-      if (trial.required && trial.required[i]) {
-        // add "question required" asterisk
-        $(question_selector + " p").append("<span class='required'>*</span>")
-
-        // add required property
-        $(question_selector + " input:radio").prop("required", true);
-      }
     }
 
     // add submit button
