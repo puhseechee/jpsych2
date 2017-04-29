@@ -31,11 +31,6 @@ jsPsych.plugins['survey-misc'] = (function() {
     // this evaluates the function and replaces
     // it with the output of the function
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
-    
-    
-    display_element.append('<div  align="center" class="ValidationError"><font color="red">You didn\'t answer some questions. Are you sure you want to continue?</font><br></div>');
-    validerror = document.getElementsByClassName('ValidationError')[0];
-    validerror.style.display = 'none';
 
     // form element
     var trial_form_id = _join(plugin_id_name, "form");
@@ -119,6 +114,11 @@ jsPsych.plugins['survey-misc'] = (function() {
 
     // add submit button
     display_element.append('<br><div align="center"><button id="next" class="button">Submit</button></div>');
+    
+    // make sure questions are answered
+    display_element.append('<div  align="center" class="ValidationError"><font color="red">You didn\'t answer some questions. Are you sure you want to continue?</font><br></div>');
+    validerror = document.getElementsByClassName('ValidationError')[0];
+    validerror.style.display = 'none';
 
     $("#next").click(function() {
         var isComplete = true;
