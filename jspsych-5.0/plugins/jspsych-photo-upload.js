@@ -233,7 +233,6 @@ jsPsych.plugins['photo-upload'] = (function(){
           
           // unhide photo, but do hide control buttons
           app.style.display = 'block';
-          app.style.width = '300px'
           controls.classList.remove("visible");
           
           if (trial.condition == 1) {
@@ -241,10 +240,10 @@ jsPsych.plugins['photo-upload'] = (function(){
               display_element.append('<div class="final" style="text-align: center;">Here is your photo. Please view it.<br> The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue</div>');
           } else if (trial.condition == 2) {
               // show everything that was in the other one
-              display_element.append('<div style="text-align: center;">Please wait while other participants view and read your message.&nbsp; &nbsp;</div><div style="text-align: center;"><br><b>Participants currently viewing your message:&nbsp;</b></div><div style="text-align: center;">&nbsp;</div> <div style="text-align: center;"> <video autoplay="" class="qmedia" height="240" peload="auto" width="360"><source src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/Alone_30sec.mp4" type="video/mp4"><embed align="middle" autoplay="true" bgcolor="white" class="qmedia" height="240" pluginspage="http://www.apple.com/quicktime/download/" src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/3user_15sec.mp4" type="video/quicktime" width="360"></video>&nbsp;</div><div style="text-align: center;"><br>The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue.</div>');
+              display_element.append('<div style="text-align: center;">Please wait while other participants view your photo.&nbsp; &nbsp;</div><div style="text-align: center;"><br><b>Participants currently viewing your photo:&nbsp;</b></div><div style="text-align: center;">&nbsp;</div> <div style="text-align: center;"> <video autoplay="" class="qmedia" height="240" peload="auto" width="360"><source src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/Alone_30sec.mp4" type="video/mp4"><embed align="middle" autoplay="true" bgcolor="white" class="qmedia" height="240" pluginspage="http://www.apple.com/quicktime/download/" src="https://cdn.rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/3user_15sec.mp4" type="video/quicktime" width="360"></video>&nbsp;</div><div style="text-align: center;"><br>The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue.</div>');
           } else {
               // same for final condition
-              display_element.append('<div style="text-align: center;"><div style="text-align: center;">Please wait while other participants view and read your message.&nbsp; &nbsp;</div><div style="text-align: center;"><br><b>Participants currently viewing your message:&nbsp;</b></div><div style="text-align: center;">&nbsp;</div><div style="text-align: center;"><video autoplay="" class="qmedia" height="240" peload="auto" width="360"><source src="https://rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/Many_30sec.mp4" type="video/mp4"><embed align="middle" autoplay="true" bgcolor="white" class="qmedia" height="240" pluginspage="http://www.apple.com/quicktime/download/" src="https://rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/3user_15sec.mp4" type="video/quicktime" width="360"></video>&nbsp;</div><div style="text-align: center;"><br><div style="text-align: center;">The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue.</div></div></div>');
+              display_element.append('<div style="text-align: center;"><div style="text-align: center;">Please wait while other participants view your photo.&nbsp; &nbsp;</div><div style="text-align: center;"><br><b>Participants currently viewing your photo:&nbsp;</b></div><div style="text-align: center;">&nbsp;</div><div style="text-align: center;"><video autoplay="" class="qmedia" height="240" peload="auto" width="360"><source src="https://rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/Many_30sec.mp4" type="video/mp4"><embed align="middle" autoplay="true" bgcolor="white" class="qmedia" height="240" pluginspage="http://www.apple.com/quicktime/download/" src="https://rawgit.com/puhseechee/jpsych2/jpsychadd/jspsych-5.0/3user_15sec.mp4" type="video/quicktime" width="360"></video>&nbsp;</div><div style="text-align: center;"><br><div style="text-align: center;">The "Next" button will appear in a few moments.&nbsp;</div><div style="text-align: center;">Please click it to continue.</div></div></div>');
           }
           
           // no matter what, we want a final "Next Button" to finish the trial with
@@ -262,7 +261,7 @@ jsPsych.plugins['photo-upload'] = (function(){
             
             jsPsych.finishTrial(trialdata); // end
           });
-          }, 30000); // make sure this is 30000 when i want 30 seconds
+          }, 10000); // make sure this is 30000 when i want 30 seconds
           
         }, 3000);
         });
