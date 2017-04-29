@@ -115,6 +115,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       $("div." + plugin_id_name + "-question").each(function(index) {
         var id = "Q" + index;
         var val = $(this).find("input:radio:checked").val
+        console.log(val)
         if (val = '\\') { isComplete = false;}
         var obje = {};
         obje[id] = val;

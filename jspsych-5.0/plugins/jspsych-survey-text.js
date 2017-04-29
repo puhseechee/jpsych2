@@ -79,6 +79,7 @@ jsPsych.plugins['survey-text'] = (function() {
       $("div.jspsych-survey-text-question").each(function(index) {
         var id = "Q" + index;
         var val = $(this).children('textarea').val();
+        console.log(val)
         if (val = '\\') { isComplete = false;}
         var obje = {};
         obje[id] = val;

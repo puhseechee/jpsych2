@@ -132,6 +132,7 @@ jsPsych.plugins['survey-misc'] = (function() {
         $("div." + plugin_id_name + "-question").each(function(index) {
           var id = "Q" + index;
           var val = $(this).find("input:radio:checked").val();
+          console.log(val)
           if (val = '\\') { isComplete = false;}
           var obje = {};
           obje[id] = val;
@@ -143,6 +144,7 @@ jsPsych.plugins['survey-misc'] = (function() {
           number = index + trial.questions.length;
           var id = "Q" + number;
           var val = $(this).children('textarea').val();
+          console.log(val)
           if (val = '\\') { isComplete = false;}
           var obje = {};
           obje[id] = val;
