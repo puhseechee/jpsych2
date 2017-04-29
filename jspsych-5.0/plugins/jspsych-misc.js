@@ -133,7 +133,7 @@ jsPsych.plugins['survey-misc'] = (function() {
           var id = "Q" + index;
           var val = $(this).find("input:radio:checked").val();
           console.log(val)
-          if (val = '\\') { isComplete = false;}
+          if (val == '\\') { isComplete = false;}
           var obje = {};
           obje[id] = val;
           $.extend(question_data, obje);
