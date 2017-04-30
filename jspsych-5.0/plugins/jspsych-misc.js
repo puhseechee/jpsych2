@@ -152,14 +152,12 @@ jsPsych.plugins['survey-misc'] = (function() {
         });
         
         // validate for multiple choice
-        if ($('input[type=radio]:checked').size() < trial.questions.length) {
-          isComplete=false;
-        }
+        if ($('input[type=radio]:checked').size() < trial.questions.length) { isComplete=false; }
         
         // validate for survey-text
         for (var i = 0; i < text.length; i++) {
           console.log(document.getElementById('jspsych-survey-text-response-' + i).value);
-          if (document.getElementById('jspsych-survey-text-response-' + i).value == ''){isComplete=false}
+          if (document.getElementById('#jspsych-survey-text-response-' + i).value == ''){isComplete=false}
         }
         
         // don't finish if 
