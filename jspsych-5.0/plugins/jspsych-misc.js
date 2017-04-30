@@ -109,7 +109,7 @@ jsPsych.plugins['survey-misc'] = (function() {
         $("#jspsych-survey-text-" + i).append('<p class="jspsych-survey-text">' + text[i] + '</p>');
         
         // add text box
-        $("#jspsych-survey-text-" + i).append('<textarea name="#jspsych-survey-text-response-' + i + '" cols="' + 40 + '" rows="' + 1 + '"></textarea>');
+        $("#jspsych-survey-text-" + i).append('<textarea id="#jspsych-survey-text-response-' + i + ' name="#jspsych-survey-text-response-' + i + '" cols="' + 40 + '" rows="' + 1 + '"></textarea>');
     }
 
     // add submit button
