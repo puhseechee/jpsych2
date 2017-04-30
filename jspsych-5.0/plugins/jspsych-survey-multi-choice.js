@@ -115,12 +115,15 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       $("div." + plugin_id_name + "-question").each(function(index) {
         var id = "Q" + index;
         var val = $(this).find("input:radio:checked").val
-        console.log(val)
-        if (val == '\\') { isComplete = false;}
         var obje = {};
         obje[id] = val;
         $.extend(question_data, obje);
       });
+      
+      // don't finish if every question not answered
+      if ($('input[type=radio]:checked').size() < trial.questions.length) {
+        isComplete=false;
+      }
 
       // don't finish if 
       if ((isComplete == false) && (validerror.style.display == 'none')) {
